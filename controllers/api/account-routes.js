@@ -39,17 +39,17 @@ router.post("/signup", async (req, res) => {
 
         console.log(newRestaurant);
 
-        // req.session.save(() => {
-        //     req.session.isLoggedIn = true,
-        //     req.session.user_id = newOwner.id,
+        req.session.save(() => {
+            req.session.isLoggedIn = true,
+            req.session.user_id = newOwner.id,
 
-        //     res.render("user", {
-        //         isLoggedIn: req.session.isLoggedIn,
-        //         currUserId: req.session.user_id
-        //     })
+            //change to path of profile page
+            res.render("homepage", {
+                isLoggedIn: req.session.isLoggedIn,
+                currUserId: req.session.user_id
+            })
 
-        // })
-        res.json(newRestaurant)
+        })
 
 
     } catch(err){
@@ -61,6 +61,7 @@ router.post("/signup", async (req, res) => {
 //post to authenticate login
 router.post("/login", async (req, res) => {
     try{
+        console.log(req.body.password);
         let reqUserSignIn = await Owner.findOne({
             where: {
                 email: req.body.email
@@ -79,16 +80,17 @@ router.post("/login", async (req, res) => {
             return 
         }
 
-        // req.session.save(() => {
-        //     req.session.isLoggedIn = true,
-        //     req.session.user_id = reqUserSignIn.id,
+        req.session.save(() => {
+            req.session.isLoggedIn = true,
+            req.session.user_id = reqUserSignIn.id,
 
-        //     res.render("user", {
-        //         isLoggedIn: req.session.isLoggedIn,
-        //         currUserId: req.session.user_id
-        //     })
+            // change to path of profile page
+            res.render("homepage", {
+                isLoggedIn: req.session.isLoggedIn,
+                currUserId: req.session.user_id
+            })
 
-        // })
+        })
     } catch (err){
         console.log(err);
         res.json(err);
@@ -96,7 +98,7 @@ router.post("/login", async (req, res) => {
 })
 
 //post to logout current user
-router.post("logout", (req, res) => {
+router.post("/logout", (req, res) => {
     if(req.session.isLoggedIn){
         req.session.destroy(() => {
             res.render("/", {

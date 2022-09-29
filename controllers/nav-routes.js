@@ -13,19 +13,23 @@ const {
 
 // main page that will prompt user for choice between viewing catalog of reataurants, signing up or loggin in
 router.get("/", (req, res) => {
-    res.render("homepage");
+    res.render("homepage", {
+        isLoggedIn: req.session.isLoggedIn,
+        currUserId: req.session.user_id
+    });
 })
 
 router.get("/signup", (req, res) => {
     res.render("signup", {
-        isLoggedIn: res.session.isLoggedIn
+        isLoggedIn: req.session.isLoggedIn,
+        currUserId: req.session.user_id
     })
 })
 
 router.get("/login", (req, res) => {
     res.render("login", {
-        isLoggedIn: res.session.isLoggedIn
-
+        isLoggedIn: req.session.isLoggedIn,
+        currUserId: req.session.user_id
     });
 })
 
@@ -52,16 +56,16 @@ router.get("/catalog/:id/:mealId/reviews", (req, res) => {
 // page to add individual items
 router.get("/user/add", (req, res) => {
     res.render("addnewfoods", {
-        isLoggedIn: res.session.isLoggedIn
-
+        isLoggedIn: req.session.isLoggedIn,
+        currUserId: req.session.user_id
     })
 })
 
 // page to construct a meal 
 router.get("/user/create", (req, res) => {
     res.render("mealcreation", {
-        isLoggedIn: res.session.isLoggedIn
-
+        isLoggedIn: req.session.isLoggedIn,
+        currUserId: req.session.user_id
     })
 })
 
