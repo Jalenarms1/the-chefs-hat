@@ -28,7 +28,7 @@ const signupFormHandler = async (event) => {
     const email = document.querySelector('#formEmail').value.trim();
     const password = document.querySelector('#formPass').value.trim();
     const address = document.querySelector('#address').value.trim();
-const phoneNumber = document.querySelector('#formPhone').value.trim();
+    const phoneNumber = document.querySelector('#formPhone').value.trim();
     const restName = document.querySelector('#formRest').value.trim();
 
 
@@ -47,3 +47,4 @@ const phoneNumber = document.querySelector('#formPhone').value.trim();
         }
     }
 };
+document.querySelector('#registerbtn').addEventListener('submit', signupFormHandler);
