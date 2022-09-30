@@ -98,8 +98,13 @@ async function desertsName(event) {
     }
   }
   
-  document.querySelector('#desertBtn').addEventListener('submit', desertsName);
+  // document.querySelector('#desertBtn').addEventListener('submit', desertsName);
 
+ let desertBtn = document.querySelector('#desertBtn');
+ 
+  if(deserttBtn){
+    desertBtn.addEventListener('click', desertsName);
+}
 
 
   
