@@ -239,6 +239,7 @@ router.post("/dessert", async (req, res) => {
 
         if(newDessert){
             res.json(newDessert)
+            console.log(newDessert);
         }
     } catch(err){
         console.log(err);
@@ -291,6 +292,7 @@ router.post("/drink", async (req, res) => {
 
         if(newDrink){
             res.json(newDrink)
+            console.log(newDrink);
         }
     } catch(err){
         console.log(err);
