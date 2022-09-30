@@ -1,13 +1,19 @@
+const main_course_name = document.querySelector('#meal');
+const main_calorie = document.querySelector('#mealcal');
+let mainCourseBtn = document.querySelector('#mealBtn');
+let sideBtn = document.querySelector('#sideBtn');
+let drinksBtn = document.querySelector('#drinksBtn');
+let dessertsBtn = document.querySelector('#desertBtn');
+
 async function newFood(event) {
   event.preventDefault();
-  
-  const main_course_name = document.querySelector('#meal').value;
-  const main_calorie = document.querySelector('#mealcal').value;
-  const response = await fetch(`/api/main-course`, {
+  console.log(main_course_name.value);
+ 
+  const response = await fetch(`/api/user/main-course`, {
     method: 'POST',
     body: JSON.stringify({
-       name: main_course_name,
-       name: main_calorie
+      name: main_course_name.value,
+      calories: parseInt(main_calorie.value)
     }),
     headers: {
       'Content-Type': 'application/json',
@@ -15,90 +21,100 @@ async function newFood(event) {
   });
 
   if (response.ok) {
-    document.location.replace('/');
+    document.location.replace('/user/add');
   } else {
     alert('Failed to add');
   }
 }
 
-document.querySelector('#mealBtn').addEventListener('submit', newFood);
+if(mainCourseBtn){
+
+  mainCourseBtn.addEventListener('click', newFood);
+}
 
 async function newFoodSides(event) {
-    event.preventDefault();
-    
-    const side_dish_name = document.querySelector('#sides').value;
-    const side_calorie = document.querySelector('#sidecal').value;
-    const response = await fetch(`/api/side`, {
-      method: 'POST',
-      body: JSON.stringify({
-          name : side_dish_name,
-          name: side_calorie
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+  event.preventDefault();
   
-    if (response.ok) {
-      document.location.replace('/');
-    } else {
-      alert('Failed to add');
-    }
+  const side_dish_name = document.querySelector('#sides');
+  const side_calorie = document.querySelector('#sidecal');
+  const response = await fetch(`/api/user/side-dish`, {
+    method: 'POST',
+    body: JSON.stringify({
+      name : side_dish_name.value,
+      calories: parseInt(side_calorie.value)
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.ok) {
+    document.location.replace('/user/add');
+  } else {
+    alert('Failed to add');
   }
+}
   
-  document.querySelector('#sideBtn').addEventListener('submit', newFoodSides);
+if(sideBtn){
+  sideBtn.addEventListener('click', newFoodSides);
+}
 
 
-  async function drinksName(event) {
-    event.preventDefault();
-    
-    const drinks_name = document.querySelector('#drinks').value;
-    const drinks_calorie = document.querySelector('#drinksCal').value;
-    const response = await fetch(`/api/drinks`, {
-      method: 'POST',
-      body: JSON.stringify({
-        name: drinks_name,
-        name: drinks_calorie
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+async function drinksName(event) {
+  event.preventDefault();
   
-    if (response.ok) {
-      document.location.replace('/');
-    } else {
-      alert('Failed to add');
-    }
+  const drinks_name = document.querySelector('#drinks');
+  const drinks_calorie = document.querySelector('#drinksCal');
+  const response = await fetch(`/api/user/drinks`, {
+    method: 'POST',
+    body: JSON.stringify({
+      name : drinks_name.value,
+      calories: parseInt(drinks_calorie.value)
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.ok) {
+    document.location.replace('/user/add');
+  } else {
+    alert('Failed to add');
   }
-  
-  document.querySelector('#drinksBtn').addEventListener('submit', drinksName);
+}
+
+if(drinksBtn){
+  drinksBtn.addEventListener('click', drinksName);
+
+}
 
 
 async function desertsName(event) {
-    event.preventDefault();
-    
-    const deserts_name = document.querySelector('#desert').value;
-    const drinks_calorie = document.querySelector('#desertCal').value;
-    const response = await fetch(`/api/desert`, {
-      method: 'POST',
-      body: JSON.stringify({
-       name: deserts_name,
-       name: deserts_calorie
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+  event.preventDefault();
   
-    if (response.ok) {
-      document.location.replace('/');
-    } else {
-      alert('Failed to add');
-    }
+  const desserts_name = document.querySelector('#desert');
+  const desserts_calories = document.querySelector('#desertCal');
+  const response = await fetch(`/api/user/dessert`, {
+    method: 'POST',
+    body: JSON.stringify({
+      name : desserts_name.value,
+      calories: parseInt(desserts_calories.value)
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.ok) {
+    document.location.replace('/user/add');
+  } else {
+    alert('Failed to add');
   }
-  
-  // document.querySelector('#desertBtn').addEventListener('submit', desertsName);
+}
+
+if(dessertsBtn){
+  dessertsBtn.addEventListener('click', desertsName);
+}
 
  let desertBtn = document.querySelector('#desertBtn');
  

@@ -109,6 +109,231 @@ router.post("/logout", (req, res) => {
     }
 });
 
+//post, put, delete to add,edit and remove new main-course options for when constructing a new meal
+// format {
+//      name: (string),
+//      calories: (integer)
+// }
+router.post("/main-course", async (req, res) => {
+    try{
+        let newMainCourse = await MainCourse.create(req.body);
+
+        if(newMainCourse){
+            // res.render("new-item", {
+            //     isLoggedIn: req.session.isLoggedIn,
+            //     currUserId: req.session.user_id
+            // })
+            res.json(newMainCourse);
+            console.log(newMainCourse);
+        }
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
+router.put("/main-course/:id", async (req, res) => {
+    try{
+        let newMainCourse = await MainCourse.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        })
+
+        console.log(newMainCourse);
+        res.json(newMainCourse)
+    } catch(err){
+        console.log(err);
+        res.json(err);
+    }
+})
+
+router.delete("/main-course/:id", async (req, res) => {
+    try{
+        let removedItem = await MainCourse.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+
+        res.json(removedItem);
+        console.log(removedItem);
+    } catch(err){
+        res.json(err);
+        console.log(err);
+    }
+})
+
+
+
+//post, put, delete to add, edit and remove new side dish
+// format {
+//      name: (string),
+//      calories: (integer)
+// }
+router.post("/side-dish", async (req, res) => {
+    try{
+        let newSide = await Side.create(req.body);
+
+        if(newSide){
+            res.json(newSide)
+            console.log(newSide);
+        }
+
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
+router.put("/side-dish/:id", async (req, res) => {
+    try{
+        let newSideInfo = await Side.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        })
+
+        res.json(newSideInfo);
+        console.log(newSideInfo);
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
+router.get("/side-dish", async (req, res) => {
+    try{
+        let response = await Side.findAll();
+
+        res.json(response);
+    } catch(err){
+        res.json(err)
+    }
+})
+
+router.delete("/side-dish/:id", async (req, res) => {
+    try{
+        let remSideInfo = await Side.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+
+        res.json(remSideInfo);
+        console.log(remSideInfo);
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
+//post, put, delete to add, edit and remove new dessert dish
+// format {
+//      name: (string),
+//      calories: (integer)
+// }
+router.post("/dessert", async (req, res) => {
+    try{
+        let newDessert = await Dessert.create(req.body);
+
+        if(newDessert){
+            res.json(newDessert)
+            console.log(newDessert);
+        }
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
+router.put("/dessert/:id", async (req, res) => {
+    try{
+        let newDessert = await Dessert.create(req.body, {
+            where: {
+                id: req.params.id
+            }
+        });
+
+        if(newDessert){
+            res.json(newDessert)
+        }
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
+router.delete("/dessert/:id", async (req, res) => {
+    try{
+        let remDessert = await Dessert.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+
+        if(remDessert){
+            res.json({msg: 'success'})
+        }
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
+//post, put, delete to add, edit and remove new drink
+// format {
+//      name: (string),
+//      calories: (integer)
+// }
+router.post("/drink", async (req, res) => {
+    try{
+        let newDrink = await Drink.create(req.body);
+
+        if(newDrink){
+            res.json(newDrink)
+            console.log(newDrink);
+        }
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
+router.put("/drink/:id", async (req, res) => {
+    try{
+        let newDrink = await Drink.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        });
+
+        if(newDrink){
+            res.json(newDrink)
+        }
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
+router.delete("/drink/:id", async (req, res) => {
+    try{
+        let remDrink = await Drink.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+
+        if(remDrink){
+            res.json(remDrink)
+        }
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
 
 
 
