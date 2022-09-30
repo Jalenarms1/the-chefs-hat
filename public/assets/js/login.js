@@ -52,14 +52,4 @@ const signupFormHandler = async (event) => {
         }
     }
 };
-
-if(signupBtn){
-    signupBtn.addEventListener("click", signupFormHandler);
-
-}
-if(loginBtn){
-    loginBtn.addEventListener("click", loginFormHandler);
-
-}
-
-
+document.querySelector('#registerbtn').addEventListener('submit', signupFormHandler);
