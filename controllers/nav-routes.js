@@ -69,14 +69,66 @@ router.get("/user/create", (req, res) => {
     })
 })
 
-// will load up related-info for the logged-in user on the profile/dashboard
-router.get("/user/profile", (req, res) => {
+// will load up related-info for the logged-in user on the profile/dashboard-- currUser id
+router.get("/user/profile/:id", async (req, res) => {
+    try {
+        let currOwner = await Owner.findByPk(req.params.id, {
+            include: [{model: Restaurant}]
+        })
 
+        let pureOwnerData = currOwner.get({plain: true});
+        
+        console.log(pureOwnerData);
+
+        let mealsData = await Meal.findAll({
+            where: {
+                restaurantId: pureOwnerData.restaurant.id
+            },
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
+
+        let allMeals = mealsData.map(item => {
+            return item.get({plain:true})
+        })
+
+        
+
+        if(pureOwnerData && allMeals){
+            res.render("user-profile", {
+                isLoggedIn: req.session.isLoggedIn,
+                currUserId: req.session.user_id,
+                owner: pureOwnerData,
+                meals: allMeals
+
+
+            })
+        }
+    } catch(err){
+        console.log(err);
+        res.json(err);
+    }
 })
 
 // when initiated, will load up the chosen item of the user's menu that they want to view
-router.get("/user/profile/:id", (req, res) => {
+router.get("/user/meal/:id", async (req, res) => {
+    try{
+        let getMeal = await Meal.findByPk(req.params.id, {
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
 
+        let pureMealInfo = getMeal.get({plain: true});
+
+        res.render("one-meal", {
+            meal: pureMealInfo,
+            isLoggedIn: req.session.isLoggedIn,
+            currUserId: req.session.user_id
+        })
+
+
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
 })
 
 //loads the reviews for the item the customer is choosing to display

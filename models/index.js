@@ -10,11 +10,11 @@ const  Dessert  = require("./Dessert");
 const  Review  = require("./Review");
 const MealTicket = require("./MealTicket");
 
-Restaurant.hasOne(Owner, {
+Owner.hasOne(Restaurant, {
     foreignKey: 'owner_id'
 });
 
-Owner.belongsTo(Restaurant, {
+Restaurant.belongsTo(Owner, {
     foreignKey: 'owner_id'
 });
 

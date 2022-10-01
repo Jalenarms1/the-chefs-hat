@@ -1,0 +1,44 @@
+
+<div class="profile-details header-bg text-light p-1">
+</div>
+
+<div class="parent-one pt-5 cst-bg">
+
+    <div class="list-group w-25 h-100vh bg-dark">
+        <a href="#" class="list-group-item list-group-item-action mb-1 cst-menu-bg" aria-current="true">
+            The current link item
+        </a>
+        <a href="#" class="list-group-item list-group-item-action mb-1 cst-menu-bg">A second link item</a>
+        <a href="#" class="list-group-item list-group-item-action mb-1 cst-menu-bg">A third link item</a>
+        <a href="#" class="list-group-item list-group-item-action mb-1 cst-menu-bg">A fourth link item</a>
+       
+    </div>
+
+    <div class="row w-100">
+        <div class="row d-flex flex-wrap w-100 m-auto mt-3">
+            
+            <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-12 my-2">
+                <div class="card shadow" style="width: 100%;">
+                    <img src="https://www.dochipo.com/wp-content/uploads/2021/08/YouTube-Thumbnail-_-Food-2-1024x576.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{meal.name}}</h5>
+                        <p class="card-text">Contains: {{#each meal.main_courses as |mainCourse|}}<span>{{mainCourse.name}}, </span>{{/each}}</p>
+                        <a href="/user/meal/{{meal.id}}"  class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        
+            
+            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-12 my-2 scroll-this ml-5">
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique iusto, nesciunt, ducimus, maxime natus dicta ab ipsa veritatis ullam quo reprehenderit ad consequatur quis sint dolorem numquam molestiae sapiente distinctio.
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque sapiente nam exercitationem unde molestiae facere perspiciatis, a fugiat excepturi recusandae nostrum commodi dicta dolore voluptates alias maiores harum tempora cupiditate!
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae aliquid fugiat qui recusandae nulla commodi itaque libero alias? Accusamus ipsam debitis voluptate cum dignissimos odit vero quae ea minus corporis.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, repudiandae. Placeat distinctio excepturi perspiciatis iure unde. Ipsam magni repudiandae animi, explicabo eveniet reprehenderit at officia cumque rem iste, dolorum eligendi?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel doloribus explicabo debitis rerum deleniti officia voluptate possimus? Voluptates odit aliquid atque quisquam sit, rerum beatae incidunt, soluta ducimus nemo animi?
+                </p>
+            </div>
+        </div>
+
+        
+    </div>
+</div>

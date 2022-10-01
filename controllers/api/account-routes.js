@@ -10,8 +10,29 @@ const {
     Review,
     MealTicket
 } = require("../../models");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET,
+    secure: true
+})
+
+const options = {
+    use_filename: true,
+    unique_filename: false,
+    overwrite: true,
+};
+
 
 // api/user
+
+router.post("/signup/image", async (req, res) => {
+    
+
+    res.json(newCloudPic);
+})
 
 //initial post on creating a new account
 //format {
@@ -24,6 +45,11 @@ const {
 // }
 router.post("/signup", async (req, res) => {
     try{
+        let {image} = req.body
+        
+        let newCloudPic = await cloudinary.uploader.upload(image, options);
+        console.log(newCloudPic);
+
         let newOwner = await Owner.create({
             fullName: req.body.owner,
             email: req.body.email,
@@ -32,6 +58,7 @@ router.post("/signup", async (req, res) => {
 
         let newRestaurant = await Restaurant.create({
             name: req.body.restName,
+            image: newCloudPic.public_id,
             ownerId: newOwner.id,
             address: req.body.address,
             phoneNumber: req.body.phoneNumber
@@ -101,10 +128,10 @@ router.post("/login", async (req, res) => {
 router.post("/logout", (req, res) => {
     if(req.session.isLoggedIn){
         req.session.destroy(() => {
+            res.status(204).end();
             res.render("/", {
-                isLoggedIn: req.session.isLoggedIn,
-                currUserId: req.session.user_id
             })
+            
         })
     }
 });
@@ -119,10 +146,6 @@ router.post("/main-course", async (req, res) => {
         let newMainCourse = await MainCourse.create(req.body);
 
         if(newMainCourse){
-            // res.render("new-item", {
-            //     isLoggedIn: req.session.isLoggedIn,
-            //     currUserId: req.session.user_id
-            // })
             res.json(newMainCourse);
             console.log(newMainCourse);
         }
@@ -334,7 +357,156 @@ router.delete("/drink/:id", async (req, res) => {
     }
 })
 
+// front-end body format to post meal {
+//     name: (string),
+//     image: (string -- dataURL),
+//     mainCourseIds: (array),
+//     sideIds: (array),
+//     dessertIds: (array),
+//     drinkIds: (array)
+// }
+//
+router.post("/meal/:id", async (req, res) => {
+    try{
+        let {image} = req.body;
 
+        let imgData = await cloudinary.uploader.upload(image, options);
+        
+        let constructMealTicket = [];
+        let newMeal = await Meal.create({
+            name: req.body.name,
+            image: imgData.public_id,
+            restaurantId: req.params.id
+        });
+
+        req.body.mainCourseIds.map(item => {
+            constructMealTicket.push({
+                mealId: newMeal.id,
+                mainCourseId: item
+            })
+        })
+
+        req.body.sideIds.map(item => {
+            constructMealTicket.push({
+                mealId: newMeal.id,
+                sideId: item
+            })
+        })
+
+        req.body.dessertIds.map(item => {
+            constructMealTicket.push({
+                mealId: newMeal.id,
+                dessertId: item
+            })
+        })
+
+        req.body.drinkIds.map(item => {
+            constructMealTicket.push({
+                mealId: newMeal.id,
+                drinkId: item
+            })
+        })
+
+        console.log(constructMealTicket);
+        let newMainMealTicket = await MealTicket.bulkCreate(constructMealTicket)
+        console.log(newMainMealTicket);
+        res.json(newMainMealTicket);
+
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
+// route to update meal --tested successfully
+router.put("/meal/:id", async (req, res) => {
+    try{
+        let mealToUpdate = await Meal.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        })
+        
+        let newMealTickets = [];
+        let mealTicketsToUpdate = await MealTicket.findAll({
+            where: {
+                mealId: req.params.id
+            }
+        })
+
+        let mainCourseIds = mealTicketsToUpdate.map(({ mainCourseId }) => mainCourseId);
+        let newMainCourseIds = req.body.mainCourseIds.filter(item => !mainCourseIds.includes(item)).map(newItem => {
+            return newMealTickets.push({
+                mealId: req.params.id,
+                mainCourseId: newItem
+            })
+        })
+        let mainCourseIdsToRemove = mainCourseIds.filter(item => {
+            return !req.body.mainCourseIds.includes(item)
+        })
+        let removingMainIds = await MealTicket.destroy({
+            where: {
+                mainCourseId: mainCourseIdsToRemove
+            }
+        })
+        //
+        let sideIds = mealTicketsToUpdate.map(({ sideId }) => sideId);
+        let newSideIds = req.body.sideIds.filter(item => !sideIds.includes(item)).map(newItem => {
+            return newMealTickets.push({
+                mealId: req.params.id,
+                sideId: newItem
+            });
+        })
+        let sideIdsToRemove = sideIds.filter(item => {
+            return !req.body.sideIds.includes(item)
+        })
+        let removingSideIds = await MealTicket.destroy({
+            where: {
+                sideId: sideIdsToRemove
+            }
+        })
+        //
+        let dessertIds = mealTicketsToUpdate.map(({ dessertId }) => dessertId);
+        let newDessertIds = req.body.dessertIds.filter(item => !dessertIds.includes(item)).map(newItem => {
+            return newMealTickets.push({
+                mealId: req.params.id,
+                dessertId: newItem
+            })
+        })
+        let dessertIdsToRemove = dessertIds.filter(item => {
+            return !req.body.dessertIds.includes(item)
+        })
+        let removingDessertIds = await MealTicket.destroy({
+            where: {
+                dessertId: dessertIdsToRemove
+            }
+        })
+        //
+        let drinkIds = mealTicketsToUpdate.map(({ drinkId }) => drinkId);
+        let newDrinkIds = req.body.drinkIds.filter(item => !drinkIds.includes(item)).map(newItem => {
+            return newMealTickets.push({
+                mealId: req.params.id,
+                drinkId: newItem
+            })
+        })
+        let drinkIdsToRemove = drinkIds.filter(item => {
+            return !req.body.drinkIds.includes(item)
+        })
+        let removingDrinkIds = await MealTicket.destroy({
+            where: {
+                drinkId: drinkIdsToRemove
+            }
+        })
+
+        let updatedMealTickets = await MealTicket.bulkCreate(newMealTickets);
+
+        res.json(updatedMealTickets)
+
+        
+    } catch(err){
+        console.log(err);
+    }
+})
 
 
 module.exports = router;
