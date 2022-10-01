@@ -19,7 +19,7 @@ const userLogin = async (event) => {
             headers: { 'Content-Type': 'application/json' },
         });
         if (response.ok) {
-            document.location.replace('/');
+            document.location.replace('/user/profile');
         } else {
             alert(response.statusText);
         }

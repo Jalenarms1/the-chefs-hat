@@ -74,9 +74,9 @@ router.get("/user/create", loginCheck, (req, res) => {
 })
 
 // will load up related-info for the logged-in user on the profile/dashboard-- currUser id
-router.get("/user/profile/:id", loginCheck, async (req, res) => {
+router.get("/user/profile/", loginCheck, async (req, res) => {
     try {
-        let currOwner = await Owner.findByPk(req.params.id, {
+        let currOwner = await Owner.findByPk(req.session.user_id, {
             include: [{model: Restaurant}]
         })
 
