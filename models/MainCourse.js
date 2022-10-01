@@ -18,6 +18,14 @@ MainCourse.init(
         calories: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        restaurantId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'resturant',
+                key: 'id'
+                
+            }
         }
     },
     {

@@ -22,9 +22,46 @@ Restaurant.hasMany(Meal, {
     foreignKey: 'restaurant_id'
 });
 
+
 Meal.belongsTo(Restaurant, {
     foreignKey: 'restaurant_id'
 });
+
+Restaurant.hasMany(MainCourse, {
+    foreignKey: 'restaurant_id'
+})
+
+MainCourse.belongsTo(Restaurant, {
+    foreignKey: 'restaurant_id',
+    onDelete: "CASCADE"
+})
+
+Restaurant.hasMany(Side, {
+    foreignKey: 'restaurant_id'
+})
+
+Side.belongsTo(Restaurant, {
+    foreignKey: 'restaurant_id',
+    onDelete: "CASCADE"
+})
+
+Restaurant.hasMany(Dessert, {
+    foreignKey: 'restaurant_id'
+})
+
+Dessert.belongsTo(Restaurant, {
+    foreignKey: 'restaurant_id',
+    onDelete: "CASCADE"
+})
+
+Restaurant.hasMany(Drink, {
+    foreignKey: 'restaurant_id'
+})
+
+Drink.belongsTo(Restaurant, {
+    foreignKey: 'restaurant_id',
+    onDelete: "CASCADE"
+})
 
 Meal.hasMany(Review, {
     foreignKey: 'meal_id'

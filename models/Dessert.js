@@ -18,6 +18,14 @@ Dessert.init(
         calories: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        restaurantId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'resturant',
+                key: 'id'
+                
+            }
         }
     },
     {

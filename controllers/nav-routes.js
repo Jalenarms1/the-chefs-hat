@@ -10,9 +10,13 @@ const {
     Review,
     MealTicket
 } = require("../models");
+const { loginCheck } = require("../utils/helpers");
 
 // main page that will prompt user for choice between viewing catalog of reataurants, signing up or loggin in
 router.get("/", (req, res) => {
+
+
+
     res.render("homepage", {
         isLoggedIn: req.session.isLoggedIn,
         currUserId: req.session.user_id
@@ -54,7 +58,7 @@ router.get("/catalog/:id/:mealId/reviews", (req, res) => {
 })
 
 // page to add individual items
-router.get("/user/add", (req, res) => {
+router.get("/user/add", loginCheck, (req, res) => {
     res.render("addnewfoods", {
         isLoggedIn: req.session.isLoggedIn,
         currUserId: req.session.user_id
@@ -62,7 +66,7 @@ router.get("/user/add", (req, res) => {
 })
 
 // page to construct a meal 
-router.get("/user/create", (req, res) => {
+router.get("/user/create", loginCheck, (req, res) => {
     res.render("mealcreation", {
         isLoggedIn: req.session.isLoggedIn,
         currUserId: req.session.user_id
@@ -70,7 +74,7 @@ router.get("/user/create", (req, res) => {
 })
 
 // will load up related-info for the logged-in user on the profile/dashboard-- currUser id
-router.get("/user/profile/:id", async (req, res) => {
+router.get("/user/profile/:id", loginCheck, async (req, res) => {
     try {
         let currOwner = await Owner.findByPk(req.params.id, {
             include: [{model: Restaurant}]
@@ -110,7 +114,7 @@ router.get("/user/profile/:id", async (req, res) => {
 })
 
 // when initiated, will load up the chosen item of the user's menu that they want to view
-router.get("/user/meal/:id", async (req, res) => {
+router.get("/user/meal/:id", loginCheck, async (req, res) => {
     try{
         let getMeal = await Meal.findByPk(req.params.id, {
             include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
@@ -132,7 +136,7 @@ router.get("/user/meal/:id", async (req, res) => {
 })
 
 //loads the reviews for the item the customer is choosing to display
-router.get("/user/profile/:id/reviews", (req, res) => {
+router.get("/user/profile/:id/reviews", loginCheck, (req, res) => {
 
 })
 

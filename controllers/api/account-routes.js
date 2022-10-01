@@ -50,6 +50,13 @@ router.post("/signup", async (req, res) => {
         let newCloudPic = await cloudinary.uploader.upload(image, options);
         console.log(newCloudPic);
 
+        let sizedPic = await cloudinary.uploader.explicit(newCloudPic.public_id, {
+            type: 'upload',
+                eager: [{width: 250, height: 250}]
+        })
+
+        console.log(sizedPic);
+
         let newOwner = await Owner.create({
             fullName: req.body.owner,
             email: req.body.email,
@@ -141,9 +148,20 @@ router.post("/logout", (req, res) => {
 //      name: (string),
 //      calories: (integer)
 // }
-router.post("/main-course", async (req, res) => {
+router.post("/main-course/", async (req, res) => {
     try{
-        let newMainCourse = await MainCourse.create(req.body);
+        let findRestaurant = await Restaurant.findOne({
+            where: {
+                ownerId: req.session.user_id
+            }
+        })
+
+
+        let newMainCourse = await MainCourse.create({
+            name: req.body.name,
+            calories: req.body.calories,
+            restaurantId: findRestaurant.id
+        });
 
         if(newMainCourse){
             res.json(newMainCourse);
@@ -194,9 +212,19 @@ router.delete("/main-course/:id", async (req, res) => {
 //      name: (string),
 //      calories: (integer)
 // }
-router.post("/side-dish", async (req, res) => {
+router.post("/side-dish/", async (req, res) => {
     try{
-        let newSide = await Side.create(req.body);
+        let findRestaurant = await Restaurant.findOne({
+            where: {
+                ownerId: req.session.user_id
+            }
+        })
+
+        let newSide = await Side.create({
+            name: req.body.name,
+            calories: req.body.calories,
+            restaurantId: findRestaurant.id
+        });
 
         if(newSide){
             res.json(newSide)
@@ -256,9 +284,19 @@ router.delete("/side-dish/:id", async (req, res) => {
 //      name: (string),
 //      calories: (integer)
 // }
-router.post("/dessert", async (req, res) => {
+router.post("/dessert/", async (req, res) => {
     try{
-        let newDessert = await Dessert.create(req.body);
+        let findRestaurant = await Restaurant.findOne({
+            where: {
+                ownerId: req.session.user_id
+            }
+        })
+
+        let newDessert = await Dessert.create({
+            name: req.body.name,
+            calories: req.body.calories,
+            restaurantId: findRestaurant.id
+        });
 
         if(newDessert){
             res.json(newDessert)
@@ -309,9 +347,19 @@ router.delete("/dessert/:id", async (req, res) => {
 //      name: (string),
 //      calories: (integer)
 // }
-router.post("/drink", async (req, res) => {
+router.post("/drink/", async (req, res) => {
     try{
-        let newDrink = await Drink.create(req.body);
+        let findRestaurant = await Restaurant.findOne({
+            where: {
+                ownerId: req.session.user_id
+            }
+        })
+
+        let newDrink = await Drink.create({
+            name: req.body.name,
+            calories: req.body.calories,
+            restaurantId: findRestaurant.id
+        });
 
         if(newDrink){
             res.json(newDrink)
@@ -371,12 +419,23 @@ router.post("/meal/:id", async (req, res) => {
         let {image} = req.body;
 
         let imgData = await cloudinary.uploader.upload(image, options);
+
+        let sizedImg = await cloudinary.uploader.explicit(imgData.public_id, {
+            type: 'upload',
+                eager: [{width: 250, height: 250}]
+        })
+
+        let currRestaurant = await Restaurant.findOne({
+            where: {
+                ownerId: req.session.user_id
+            }
+        })
         
         let constructMealTicket = [];
         let newMeal = await Meal.create({
             name: req.body.name,
-            image: imgData.public_id,
-            restaurantId: req.params.id
+            image: sizedImg.public_id,
+            restaurantId: currRestaurant.id
         });
 
         req.body.mainCourseIds.map(item => {
