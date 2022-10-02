@@ -10,11 +10,11 @@ const  Dessert  = require("./Dessert");
 const  Review  = require("./Review");
 const MealTicket = require("./MealTicket");
 
-Restaurant.hasOne(Owner, {
+Owner.hasOne(Restaurant, {
     foreignKey: 'owner_id'
 });
 
-Owner.belongsTo(Restaurant, {
+Restaurant.belongsTo(Owner, {
     foreignKey: 'owner_id'
 });
 
@@ -22,9 +22,46 @@ Restaurant.hasMany(Meal, {
     foreignKey: 'restaurant_id'
 });
 
+
 Meal.belongsTo(Restaurant, {
     foreignKey: 'restaurant_id'
 });
+
+Restaurant.hasMany(MainCourse, {
+    foreignKey: 'restaurant_id'
+})
+
+MainCourse.belongsTo(Restaurant, {
+    foreignKey: 'restaurant_id',
+    onDelete: "CASCADE"
+})
+
+Restaurant.hasMany(Side, {
+    foreignKey: 'restaurant_id'
+})
+
+Side.belongsTo(Restaurant, {
+    foreignKey: 'restaurant_id',
+    onDelete: "CASCADE"
+})
+
+Restaurant.hasMany(Dessert, {
+    foreignKey: 'restaurant_id'
+})
+
+Dessert.belongsTo(Restaurant, {
+    foreignKey: 'restaurant_id',
+    onDelete: "CASCADE"
+})
+
+Restaurant.hasMany(Drink, {
+    foreignKey: 'restaurant_id'
+})
+
+Drink.belongsTo(Restaurant, {
+    foreignKey: 'restaurant_id',
+    onDelete: "CASCADE"
+})
 
 Meal.hasMany(Review, {
     foreignKey: 'meal_id'

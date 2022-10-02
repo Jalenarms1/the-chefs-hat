@@ -10,9 +10,13 @@ const {
     Review,
     MealTicket
 } = require("../models");
+const { loginCheck } = require("../utils/helpers");
 
 // main page that will prompt user for choice between viewing catalog of reataurants, signing up or loggin in
 router.get("/", (req, res) => {
+
+
+
     res.render("homepage", {
         isLoggedIn: req.session.isLoggedIn,
         currUserId: req.session.user_id
@@ -54,7 +58,7 @@ router.get("/catalog/:id/:mealId/reviews", (req, res) => {
 })
 
 // page to add individual items
-router.get("/user/add", (req, res) => {
+router.get("/user/add", loginCheck, (req, res) => {
     res.render("addnewfoods", {
         isLoggedIn: req.session.isLoggedIn,
         currUserId: req.session.user_id
@@ -62,25 +66,77 @@ router.get("/user/add", (req, res) => {
 })
 
 // page to construct a meal 
-router.get("/user/create", (req, res) => {
+router.get("/user/create", loginCheck, (req, res) => {
     res.render("mealcreation", {
         isLoggedIn: req.session.isLoggedIn,
         currUserId: req.session.user_id
     })
 })
 
-// will load up related-info for the logged-in user on the profile/dashboard
-router.get("/user/profile", (req, res) => {
+// will load up related-info for the logged-in user on the profile/dashboard-- currUser id
+router.get("/user/profile/", loginCheck, async (req, res) => {
+    try {
+        let currOwner = await Owner.findByPk(req.session.user_id, {
+            include: [{model: Restaurant}]
+        })
 
+        let pureOwnerData = currOwner.get({plain: true});
+        
+        console.log(pureOwnerData);
+
+        let mealsData = await Meal.findAll({
+            where: {
+                restaurantId: pureOwnerData.restaurant.id
+            },
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
+
+        let allMeals = mealsData.map(item => {
+            return item.get({plain:true})
+        })
+
+        
+
+        if(pureOwnerData && allMeals){
+            res.render("user-profile", {
+                isLoggedIn: req.session.isLoggedIn,
+                currUserId: req.session.user_id,
+                owner: pureOwnerData,
+                meals: allMeals
+
+
+            })
+        }
+    } catch(err){
+        console.log(err);
+        res.json(err);
+    }
 })
 
 // when initiated, will load up the chosen item of the user's menu that they want to view
-router.get("/user/profile/:id", (req, res) => {
+router.get("/user/meal/:id", loginCheck, async (req, res) => {
+    try{
+        let getMeal = await Meal.findByPk(req.params.id, {
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
 
+        let pureMealInfo = getMeal.get({plain: true});
+
+        res.render("one-meal", {
+            meal: pureMealInfo,
+            isLoggedIn: req.session.isLoggedIn,
+            currUserId: req.session.user_id
+        })
+
+
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
 })
 
 //loads the reviews for the item the customer is choosing to display
-router.get("/user/profile/:id/reviews", (req, res) => {
+router.get("/user/profile/:id/reviews", loginCheck, (req, res) => {
 
 })
 
