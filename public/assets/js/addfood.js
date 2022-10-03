@@ -116,11 +116,5 @@ if(dessertsBtn){
   dessertsBtn.addEventListener('click', desertsName);
 }
 
- let desertBtn = document.querySelector('#desertBtn');
- 
-  if(deserttBtn){
-    desertBtn.addEventListener('click', desertsName);
-}
-
 
   
