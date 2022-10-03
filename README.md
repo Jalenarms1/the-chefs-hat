@@ -11,26 +11,25 @@ The project repository can be viewed here:
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Technologies applied](#technologies applied)
+- [npm dependencies](#npm dependencies)
 - [Credits](#credits)
 - [Usage](#usage)
 - [License](#license)
 - [ScreenShots](#screenshots)
-- [Tests](#tests)
 
-## Installation
 
-To install the files for testing into your local repo, using Git Bash Terminal:
+## Technologies applied
+* JavaScript
+* NodeJS
+* Express
+* MySQL
+* Handlebars
+* Heroku
 
-1) Create a folder locally to nominate for cloning from online repo
-2) Clone with SSH by
+## npm dependencies
 
-```GitBash Commands
-git clone git@github.com:Jalenarms1/the-chefs-hat.git 
 ```
-Additionally, please install [NodeJS](https://nodejs.org/en/) and the below npm packages
-
-```Terminal Commands
 npm i init -y
 npm i
 npm i bcrypt
@@ -46,10 +45,6 @@ npm i sequelize
 npm i cloudinary
 npm i nodemailer
  ```
- Before you run the code, please change scripts:{start: } to 'node server.js' in the package.json file and change your database login credentials in the (dotenv).env file.
-
-It is highly encouraged to install [Insomnia](https://insomnia.rest/), [MySQL](https://www.mysql.com/products/community/) and [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) for RESTful API and Database functionalities to work.
-
 ## Credits
 
 
