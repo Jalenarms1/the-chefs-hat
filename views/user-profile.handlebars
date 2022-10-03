@@ -1,0 +1,39 @@
+
+<div class="profile-details header-bg text-light p-1">
+</div>
+
+<div class="parent pt-5 cst-bg">
+
+    <div class="list-group w-25 h-100vh bg-dark">
+        <a href="#" class="list-group-item list-group-item-action mb-1 cst-menu-bg" aria-current="true">
+            The current link item
+        </a>
+        <a href="#" class="list-group-item list-group-item-action mb-1 cst-menu-bg">A second link item</a>
+        <a href="#" class="list-group-item list-group-item-action mb-1 cst-menu-bg">A third link item</a>
+        <a href="#" class="list-group-item list-group-item-action mb-1 cst-menu-bg">A fourth link item</a>
+       
+    </div>
+
+    <div class="cust-contain cst-menu-bg shadow-lg border border-dark border-5 p-4 mx-auto">
+        <div class="menu-head w-75 m-auto">
+            <h2 class="w-50 text-center border-bottom border-1 border-dark m-auto py-2">Menu</h2>
+
+        </div>
+
+        <div class="row d-flex flex-wrap w-100 m-auto mt-3">
+            {{#each meals as |meal|}}
+            <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-12 my-2">
+                <div class="card shadow" style="width: 100%;">
+                    <img src="https://www.dochipo.com/wp-content/uploads/2021/08/YouTube-Thumbnail-_-Food-2-1024x576.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{meal.name}}</h5>
+                        <p class="card-text">Contains: {{#each meal.main_courses as |mainCourse|}}<span>{{mainCourse.name}}, </span>{{/each}}</p>
+                        <a href="/user/meal/{{meal.id}}"  class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            
+        </div>
+    </div>
+</div>

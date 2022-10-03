@@ -5,16 +5,13 @@ async function newFormHandler(event) {
     let emptyArrayToStoreMainValues =[];
     let emptyArrayToStoresidesValues =[];
     let emptyArrayToStoredrinksValues =[];
-    let emptyArrayToStoreimageValues =[];
-    let emptyArrayToStorecalorieValues =[];
-    let emptyArrayToStorereviewValues =[];
+    let emptyArrayToStoreDessertValues = [];
 
     let mainArr = document.querySelectorAll('.main');
     let sidesArr = document.querySelectorAll('.sides');
     let drinksArr = document.querySelectorAll('.drinks');
     let image = document.querySelector('.img');
-    let calorieArr = document.querySelectorAll('.calorie');
-    let reviewArr = document.querySelectorAll('.review');
+    let dessertArr = document.querySelectorAll(".desserts")
 
     mainArr.forEach(box => {
         if(box.ckecked){
@@ -34,36 +31,45 @@ async function newFormHandler(event) {
         }
     });
 
-    let file = inputImg.files[0];
+    dessertArr.forEach(box => {
+        if(box.ckecked){
+            emptyArrayToStoreDessertValues.push(box.value)
+        }
+    });
+
+    let imageFile = image.files[0];
     let reader = new FileReader();
     
     reader.addEventListener('load', async () => {
-        console.log(reader.result.toString()
-    );
-
-    let response = await fetch(`/api/user/meal/${id}`, {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            imageIds: reader.result.toString(),
-            mainCourseIds: emptyArrayToStoreMainValues,
-            sideIds: emptyArrayToStoresidesValues,
-            drinksIds: emptyArrayToStoredrinksValues
+        let response = await fetch(`/api/user/meal/${id}`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                image: reader.result.toString(),
+                mainCourseIds: emptyArrayToStoreMainValues,
+                sideIds: emptyArrayToStoresidesValues,
+                drinksIds: emptyArrayToStoredrinksValues,
+                dessertIds: emptyArrayToStoreDessertValues
+            })
+            
+           
         })
-       });
-       console.log(response);
-       
-    })
-    reader.readAsDataURL(file);
-    if (response.ok) {
-        document.location.replace('/');
-    } else {
-        alert('Failed to load');
-    }
+        console.log(response);
+        if (response.ok) {
+            document.location.replace('/');
+        } else {
+            alert('Failed to load');
+        }
+
+    });
+    reader.readAsDataURL(imageFile);
+
+
 }
 
+if(document.querySelector('.btn')){
+    document.querySelector('.btn').addEventListener('submit', newFormHandler);
 
-
-document.querySelector('.btn').addEventListener('submit', newFormHandler);
+}

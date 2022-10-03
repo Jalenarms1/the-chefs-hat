@@ -1,1 +1,68 @@
 /* place styles here */
+
+body{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+
+}
+
+.catalog-choice{
+    background-image: 
+    linear-gradient(rgba(255, 251, 234, 0.75), rgba(117, 60, 117, .75)),
+    url("https://www.touchbistro.com/wp-content/uploads/2021/08/restaurant-interior-design-ideas-thumbnail.jpg");
+    text-decoration: none;             
+}
+
+.signup-choice{
+    background-image: 
+    linear-gradient(rgba(163, 163, 162, 0.75), rgba(44, 38, 44, 0.75)),
+    url("https://us.123rf.com/450wm/karandaev/karandaev1606/karandaev160600383/58872226-herbs-and-spices-over-black-stone-background-top-view-with-copy-space.jpg?ver=6");
+    text-decoration: none;             
+
+}
+
+.explore-heading{
+    text-shadow: 0 0 3px white;
+}
+
+.cst-hmpg-cards-parent{
+    height: 100vh;
+}
+
+.cst-bg{
+    background-color: rgb(233, 233, 233);
+}
+
+.header-bg{
+    width: 100%;
+    background-color: rgb(104, 10, 22);
+}
+
+.cust-contain{
+    width: 60%;
+    height: fit-content;
+}
+
+.cst-menu-bg{
+    background-color: bisque;
+}
+
+.shadow{
+    box-sizing: 0 0 2px 5px;
+}
+.parent{
+    display: flex;
+    height: 1000px;
+}
+.parent-one{
+    display: flex;
+    height: 1000px;
+}
+
+.scroll-this{
+    border: 1px solid black;
+    height: 250px;
+    overflow: auto;
+}
+
