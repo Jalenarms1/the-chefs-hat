@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row w-100">
+        <div class="row d-flex flex-wrap w-100 m-auto mt-3">
+            {{#each meals as |meal|}}
+            <div class="card-group">
+                <div class="card m-2">
+                    <img src="https://www.dochipo.com/wp-content/uploads/2021/08/YouTube-Thumbnail-_-Food-2-1024x576.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{meal.name}}</h5>
+                        <p class="card-text">Contains: {{#each meal.main_courses as |mainCourse|}}<span>{{mainCourse.name}}, </span>{{/each}}</p>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <a href="/user/meal/{{meal.id}}"  class="btn btn-primary">Go somewhere</a>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
