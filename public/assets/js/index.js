@@ -1,3 +1,5 @@
+import { log } from "node:util";
+
 // Place script code here
 async function newFormHandler(event) {
     event.preventDefault();
@@ -82,4 +84,25 @@ async function newFormHandler(event) {
 if(document.querySelector('.btn')){
     document.querySelector('.btn').addEventListener('click', newFormHandler);
 
+}
+const deleteBtn = document.querySelector("#delete-btn");
+
+const delMeal = async (event) => {
+    try{
+        console. log(event);
+
+        let response = await fetch(`/api/user/meal/${id}`, {
+            method: 'DELETE',
+            body: {}
+
+        })
+        if(response.ok){
+            location.replace("/meal")
+    }
+} catch (err){
+    console.log(err);
+}
+}
+if(deleteBtn){
+    deleteBtn.addEventListener('click', delMeal );
 }
