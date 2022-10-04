@@ -65,7 +65,7 @@ async function drinksName(event) {
   
   const drinks_name = document.querySelector('#drinks');
   const drinks_calorie = document.querySelector('#drinksCal');
-  const response = await fetch(`/api/user/drinks`, {
+  const response = await fetch('/api/user/drinks', {
     method: 'POST',
     body: JSON.stringify({
       name : drinks_name.value,

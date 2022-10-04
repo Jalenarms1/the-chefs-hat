@@ -52,7 +52,7 @@ router.post("/signup", async (req, res) => {
 
         let sizedPic = await cloudinary.uploader.explicit(newCloudPic.public_id, {
             type: 'upload',
-                eager: [{width: 250, height: 250}]
+                eager: [{width: 450, height: 300}]
         })
 
         console.log(sizedPic);
@@ -65,7 +65,7 @@ router.post("/signup", async (req, res) => {
 
         let newRestaurant = await Restaurant.create({
             name: req.body.restName,
-            image: newCloudPic.public_id,
+            image: sizedPic.eager[0].url,
             ownerId: newOwner.id,
             address: req.body.address,
             phoneNumber: req.body.phoneNumber
@@ -347,8 +347,9 @@ router.delete("/dessert/:id", async (req, res) => {
 //      name: (string),
 //      calories: (integer)
 // }
-router.post("/drink/", async (req, res) => {
+router.post("/drinks", async (req, res) => {
     try{
+    
         let findRestaurant = await Restaurant.findOne({
             where: {
                 ownerId: req.session.user_id
@@ -414,7 +415,7 @@ router.delete("/drink/:id", async (req, res) => {
 //     drinkIds: (array)
 // }
 //
-router.post("/meal/:id", async (req, res) => {
+router.post("/meal", async (req, res) => {
     try{
         let {image} = req.body;
 
@@ -422,7 +423,7 @@ router.post("/meal/:id", async (req, res) => {
 
         let sizedImg = await cloudinary.uploader.explicit(imgData.public_id, {
             type: 'upload',
-                eager: [{width: 250, height: 250}]
+                eager: [{width: 450, height: 300}]
         })
 
         let currRestaurant = await Restaurant.findOne({
@@ -434,37 +435,47 @@ router.post("/meal/:id", async (req, res) => {
         let constructMealTicket = [];
         let newMeal = await Meal.create({
             name: req.body.name,
-            image: sizedImg.public_id,
+            image: sizedImg.eager[0].url,
             restaurantId: currRestaurant.id
         });
 
-        req.body.mainCourseIds.map(item => {
-            constructMealTicket.push({
-                mealId: newMeal.id,
-                mainCourseId: item
+        if(req.body.mainCourseIds){
+            req.body.mainCourseIds.map(item => {
+                constructMealTicket.push({
+                    mealId: newMeal.id,
+                    mainCourseId: item
+                })
             })
-        })
 
-        req.body.sideIds.map(item => {
-            constructMealTicket.push({
-                mealId: newMeal.id,
-                sideId: item
-            })
-        })
+        }
 
-        req.body.dessertIds.map(item => {
-            constructMealTicket.push({
-                mealId: newMeal.id,
-                dessertId: item
+        if(req.body.sides){
+            req.body.sideIds.map(item => {
+                constructMealTicket.push({
+                    mealId: newMeal.id,
+                    sideId: item
+                })
             })
-        })
 
-        req.body.drinkIds.map(item => {
-            constructMealTicket.push({
-                mealId: newMeal.id,
-                drinkId: item
+        }
+
+        if(req.body.dessertIds){
+                req.body.dessertIds.map(item => {
+                    constructMealTicket.push({
+                        mealId: newMeal.id,
+                        dessertId: item
+                    })
+                })
+        }
+
+        if(req.body.drinkIds){
+            req.body.drinkIds.map(item => {
+                constructMealTicket.push({
+                    mealId: newMeal.id,
+                    drinkId: item
+                })
             })
-        })
+        }
 
         console.log(constructMealTicket);
         let newMainMealTicket = await MealTicket.bulkCreate(constructMealTicket)
