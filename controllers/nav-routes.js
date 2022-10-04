@@ -11,6 +11,7 @@ const {
     MealTicket
 } = require("../models");
 const { loginCheck } = require("../utils/helpers");
+const cloudinary = require("cloudinary").v2;
 
 // main page that will prompt user for choice between viewing catalog of reataurants, signing up or loggin in
 router.get("/", (req, res) => {
@@ -38,7 +39,26 @@ router.get("/login", (req, res) => {
 })
 
 // when user chooses to search through restaurants rather than login or sign up
-router.get("/catalog", (req, res) => {
+router.get("/catalog", async (req, res) => {
+    try{
+        let restaurantList = await Restaurant.findAll();
+
+        let restaurants = restaurantList.map(item => {
+            return item.get({plain: true})
+        })
+        
+
+
+
+        res.render('cx-restaurant-views', {
+            isLoggedIn: req.session.isLoggedIn,
+            restaurants
+        })
+
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
 
 })
 
@@ -66,15 +86,32 @@ router.get("/user/add", loginCheck, (req, res) => {
 })
 
 // page to construct a meal 
-router.get("/user/create", loginCheck, (req, res) => {
-    res.render("mealcreation", {
-        isLoggedIn: req.session.isLoggedIn,
-        currUserId: req.session.user_id
-    })
+router.get("/user/create", loginCheck, async (req, res) => {
+    try{
+        let mealItems = await Restaurant.findOne({
+            where: {
+                id: req.session.user_id
+            },
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
+
+        let pureMealItemList = mealItems.get({plain: true});
+        console.log(pureMealItemList);
+
+        res.render("mealcreation", {
+            isLoggedIn: req.session.isLoggedIn,
+            currUserId: req.session.user_id,
+            mealItems: pureMealItemList
+        })
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
+
 })
 
 // will load up related-info for the logged-in user on the profile/dashboard-- currUser id
-router.get("/user/profile/", loginCheck, async (req, res) => {
+router.get("/user/profile", loginCheck, async (req, res) => {
     try {
         let currOwner = await Owner.findByPk(req.session.user_id, {
             include: [{model: Restaurant}]
@@ -82,7 +119,6 @@ router.get("/user/profile/", loginCheck, async (req, res) => {
 
         let pureOwnerData = currOwner.get({plain: true});
         
-        console.log(pureOwnerData);
 
         let mealsData = await Meal.findAll({
             where: {
@@ -91,11 +127,16 @@ router.get("/user/profile/", loginCheck, async (req, res) => {
             include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
         })
 
+        // console.log(mealsData);
+
         let allMeals = mealsData.map(item => {
             return item.get({plain:true})
         })
-
         
+        console.log(allMeals);
+
+    
+        console.log("Gage timing");
 
         if(pureOwnerData && allMeals){
             res.render("user-profile", {
@@ -122,10 +163,27 @@ router.get("/user/meal/:id", loginCheck, async (req, res) => {
 
         let pureMealInfo = getMeal.get({plain: true});
 
+        // let sizedPic = await cloudinary.uploader.explicit(pureMealInfo.image, {
+        //     type: 'upload',
+        //         eager: [{width: 450, height: 250}]
+        // })
+        // // console.log(sizedPic);
+        // pureMealInfo.cloudImage = sizedPic.eager[0].url
+
+        // cloudinary.search.expression(`public_id:${sizedPic.public_id}`).execute().then(result => {
+        //     console.log(result);
+        // })
+        console.log(pureMealInfo);
+        // res.json(pureMealInfo);
+        let totalCal = getMeal.getTotalCalories(pureMealInfo)
+
+
+
         res.render("one-meal", {
             meal: pureMealInfo,
             isLoggedIn: req.session.isLoggedIn,
-            currUserId: req.session.user_id
+            currUserId: req.session.user_id,
+            totalCal
         })
 
 

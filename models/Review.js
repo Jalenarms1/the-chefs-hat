@@ -1,7 +1,39 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
+const nodemailer = require("nodemailer");
 
-class Review extends Model {}
+const mailTransporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'dev.test.jalen@gmail.com',
+        pass: 'thvfzaufouoaavwn'
+    }
+});
+
+
+class Review extends Model {
+    sendBadReview = async (ownerId, review) => {
+        let ownerOfReviewed =  await Owner.findOne({
+            where: {
+                id: ownerId
+            },
+            attributes: { exclude: ["password", "full_name"]}
+        })
+
+        let details = {
+            from: 'dev.test.jalen@gmail.com',
+            to: ownerOfReviewed.email,
+            subject: 'Urgent! Bad review!',
+            text: review
+        }
+    
+        mailTransporter.sendMail(details, err => {
+            if(err) console.log(err);
+            if(!err) console.log("Sent");
+        })
+    
+    }
+}
 
 Review.init(
     {

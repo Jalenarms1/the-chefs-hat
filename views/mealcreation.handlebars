@@ -1,63 +1,66 @@
-<form>
-    <header class="bg-success">
-        <div class="mb-3 text-center">
-            <label for="creationName" class="form-label">
-                <h2>Your New Dish!</h2></label>
-            <input type="text" class="form-control" id="creation" aria-describedby="creation" placeholder="Your New Dish Name Here">
-        </div>
-    </header>
+<div class="wrap-create-meal w-75 m-auto">
 
-    <div class="card-group">
-        <div class="card">
-            <div class="card-body">
-                <H3>Main dish</H3>
-                <input type="checkbox" class="form-check-input main" id="mainCheck">
-                <label class="form-check-label" for="drinks">Example</label>
-                <input type="checkbox" class="form-check-input main" id="mainCheck">
-                <label class="form-check-label" for="Main dish">Example</label>
+    <form class="bg-light m-3">
+        <header class="bg-light">
+            <div class=" text-center">
+                <label for="creationName" class="form-label">
+                    <h2>Your New Dish!</h2>
+                </label>
+                <input type="text" class="form-control w-25 mx-3" id="creationName" aria-describedby="creation" placeholder="Your New Dish Name Here">
+            </div>
+        </header>
+
+        <div class="p-1 row justify-content-center">
+            <div class="col-5 card m-1">
+                <div class="card-body">
+                    <H3>Main dish</H3>
+                    {{#each mealItems.main_courses as |main|}}
+                    <input type="checkbox" class="form-check-input main" id="mainCheck" value="{{main.id}}">
+                    <label class="form-check-label" for="drinks">{{main.name}} <small>({{main.calories}} calories)</small></label>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="col-5 card m-1">
+                <div class="card-body">
+                    <H3>Sides</H3>
+                    {{#each mealItems.sides as |side|}}
+                    <input type="checkbox" class="form-check-input sides" id="sideCheck" value="{{side.id}}">
+                    <label class="form-check-label" for="drinks">{{side.name}} <small>({{side.calories}} calories)</small></label>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="col-5 card m-1">
+                <div class="card-body">
+                    <H3>Drinks</H3>
+                    {{#each mealItems.drinks as |drink|}}
+                    <input type="checkbox" class="form-check-input drinks" id="drinkCheck" value="{{drink.id}}">
+                    <label class="form-check-label" for="drinks">{{drink.name}} <small>({{drink.calories}} calories)</small></label>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="col-5 card m-1">
+                <div class="card-body">
+                    <H3>Deserts</H3>
+                    {{#each mealItems.desserts as |dessert|}}
+                    <input type="checkbox" class="form-check-input drinks" id="mainCheck" value="{{dessert.id}}">
+                    <label class="form-check-label" for="drinks">{{dessert.name}} <small>({{dessert.calories}} calories)</small></label>
+                    {{/each}}
+                </div>
             </div>
         </div>
 
-        <div class="card">
+        <div class="card w-50 m-3">
             <div class="card-body">
-                <H3>Sides</H3>
-                <input type="checkbox" class="form-check-input sides" id="sideCheck">
-                <label class="form-check-label" for="drinks">Example</label>
-                <input type="checkbox" class="form-check-input sides" id="sideCheck">
-                <label class="form-check-label" 
-                for="sides">Example</label>
+                <h4>Upload Your Image Here!</h4>
+                <input type="file" name="upload" id="file-pick">
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                <H3>Drinks</H3>
-                <input type="checkbox" class="form-check-input drinks" id="drinksCheck">
-                <label class="form-check-label" for="drinks">Example</label>
-                <input type="checkbox" class="form-check-input drinks" id="drinksCheck">
-                <label class="form-check-label" for="drinks">Example</label>
-            </div>
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary w-25 m-3">Create!</button>
         </div>
-
-        <div class="card">
-            <div class="card-body">
-                <H3>Deserts</H3>
-                <label class="form-check-label" for="desserts">Example</label>
-                <input type="checkbox" class="form-check-input desserts" id="check">
-                <label class="form-check-label" for="desserts">Example</label>
-                <input type="checkbox" class="form-check-input desserts" id="check">
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <h4>Upload Your Image Here!</h4>
-            <input type="file" name="upload" id="file-pick">
-        </div>
-    </div>
-
-    <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-primary btn-lg">Create!</button>
-    </div>
-</form>
+    </form>
+</div>

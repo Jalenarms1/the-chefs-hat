@@ -1,0 +1,20 @@
+<div class="container w-100">
+    <h2 class="w-25 text-center m-auto mt-2 border border-primary bg-light p-2">Pick your place</h2>
+
+    <div class="row d-flex flex-wrap w-100 m-auto mt-3">
+        {{#each restaurants as |rest|}}
+        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 my-2">
+            <div class="card shadow" style="width: 100%;">
+                <img src="{{rest.image}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{rest.name}}</h5>
+                    <p>Address: {{rest.address}}</p>
+                    <p>Phone Number: {{rest.phoneNumber}}</p>
+                    <a href="/user/meal/{{rest.id}}"  class="btn btn-primary">View Menu</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        
+    </div>
+</div>
