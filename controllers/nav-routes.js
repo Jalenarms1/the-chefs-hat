@@ -10,11 +10,11 @@ const {
     Review,
     MealTicket
 } = require("../models");
-const { loginCheck } = require("../utils/helpers");
+const { loginCheck, loginCheckForHomePage } = require("../utils/helpers");
 const cloudinary = require("cloudinary").v2;
 
 // main page that will prompt user for choice between viewing catalog of reataurants, signing up or loggin in
-router.get("/", (req, res) => {
+router.get("/", loginCheckForHomePage, (req, res) => {
 
 
 
@@ -63,8 +63,8 @@ router.get("/catalog", async (req, res) => {
 })
 
 // if the user clicks on a particular restaurant to view
-router.get("/catalog/:id", (req, res) => {
-
+router.get("/catalog/:id", async (req, res) => {
+    
 })
 
 // when a non-account-holder trys to access a certail meal within that restaurant's menu
@@ -152,6 +152,79 @@ router.get("/user/profile", loginCheck, async (req, res) => {
         console.log(err);
         res.json(err);
     }
+})
+
+router.get("/user/meal/create/:id", async (req, res) => {
+    try{
+        let mealToUpdate = await Meal.findByPk(req.params.id, {
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
+
+        let pureMealData = mealToUpdate.get({plain: true})
+
+        let mealItems = await Restaurant.findByPk(pureMealData.restaurantId, {
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
+        let pureMealItems = mealItems.get({plain: true});
+        console.log(pureMealItems);
+        let availableMainCourses = [];
+        let availableSides = [];
+        let availableDesserts = [];
+        let availableDrinks = [];
+
+
+        pureMealItems.main_courses.map(item => {
+            pureMealData.main_courses.map(mealItem => {
+                if(item.name != mealItem.name){
+                    availableMainCourses.push(item)
+                }
+            })
+        })
+        
+        
+        pureMealItems.sides.map(item => {
+            pureMealData.sides.map(mealItem => {
+                if(item.name != mealItem.name){
+                    availableSides.push(item)
+                }
+            })
+        })
+
+        pureMealItems.desserts.map(item => {
+            pureMealData.desserts.map(mealItem => {
+                if(item.name != mealItem.name){
+                    availableDesserts.push(item)
+                }
+            })
+        })
+
+        pureMealItems.drinks.map(item => {
+            pureMealData.drinks.map(mealItem => {
+                if(item.name != mealItem.name){
+                    availableDrinks.push(item)
+                }
+            })
+        })
+
+        console.log(pureMealData);
+        console.log(availableDrinks);
+
+        res.render("update-meal", {
+            isLoggedIn: req.session.isLoggedIn,
+            currUserId: req.session.user_id,
+            itemsAlready: pureMealData,
+            availableMainItems: availableMainCourses,
+            availableSideItems: availableSides,
+            availableDessertItems: availableDesserts,
+            availableDrinkItems: availableDrinks
+
+        })
+
+    }catch(err){
+        console.log(err);
+        res.json(err)
+    }
+
 })
 
 // when initiated, will load up the chosen item of the user's menu that they want to view

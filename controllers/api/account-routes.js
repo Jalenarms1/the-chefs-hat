@@ -578,5 +578,28 @@ router.put("/meal/:id", async (req, res) => {
     }
 })
 
+// route to delete meal
+router.delete('/meal/:id', async(req, res) => {
+    try{
+        let mealTicketToDelete = await MealTicket.destroy({
+            where: {
+                mealId: req.params.id
+            }
+        })
+
+        let mealDeleted = await Meal.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        res.json(mealDeleted);
+        
+
+    }catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
+
 
 module.exports = router;

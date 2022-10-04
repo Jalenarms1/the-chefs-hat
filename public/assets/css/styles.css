@@ -15,6 +15,10 @@ body{
 
 }
 
+.form-bg{
+    background-color: rgba(177, 242, 242, .65);
+}
+
 .nav-wrap{
    position: relative;
    background-image: url("../../images/frsh-bg.png");
