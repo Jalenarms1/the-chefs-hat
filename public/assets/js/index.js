@@ -1,4 +1,3 @@
-import { log } from "node:util";
 
 // Place script code here
 async function newFormHandler(event) {
@@ -81,17 +80,16 @@ async function newFormHandler(event) {
 
 }
 
-if(document.querySelector('.btn')){
-    document.querySelector('.btn').addEventListener('click', newFormHandler);
-
+if(document.querySelector('#new-meal-btn')){
+    document.querySelector('#new-meal-btn').addEventListener('click', newFormHandler);
 }
-const deleteBtn = document.querySelector("#delete-btn");
+const deleteBtn = document.querySelector(".delete-btn");
 
 const delMeal = async (event) => {
     try{
         console. log(event);
 
-        let response = await fetch(`/api/user/meal/${id}`, {
+        let response = await fetch(`/api/user/meal/${event.target.id}`, {
             method: 'DELETE',
             body: {}
 
