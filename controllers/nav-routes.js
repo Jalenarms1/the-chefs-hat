@@ -16,8 +16,6 @@ const cloudinary = require("cloudinary").v2;
 // main page that will prompt user for choice between viewing catalog of reataurants, signing up or loggin in
 router.get("/", loginCheckForHomePage, (req, res) => {
 
-
-
     res.render("homepage", {
         isLoggedIn: req.session.isLoggedIn,
         currUserId: req.session.user_id
@@ -102,8 +100,31 @@ router.get("/catalog/:id", async (req, res) => {
 })
 
 // when a non-account-holder trys to access a certail meal within that restaurant's menu
-router.get("/catalog/meal/:mealId/", (req, res) => {
+router.get("/catalog/meal/:mealId/", async (req, res) => {
+    try{
+        let getMeal = await Meal.findByPk(req.params.mealId, {
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
 
+        let pureMealInfo = getMeal.get({plain: true});
+
+        console.log(pureMealInfo);
+        let totalCal = getMeal.getTotalCalories(pureMealInfo)
+
+
+
+        res.render("cx-one-meal", {
+            meal: pureMealInfo,
+            isLoggedIn: req.session.isLoggedIn,
+            currUserId: req.session.user_id,
+            totalCal
+        })
+
+
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
 })
 
 // when a non-account-holder trys to access a certail meal's reviews 
@@ -282,18 +303,7 @@ router.get("/user/meal/:id", loginCheck, async (req, res) => {
 
         let pureMealInfo = getMeal.get({plain: true});
 
-        // let sizedPic = await cloudinary.uploader.explicit(pureMealInfo.image, {
-        //     type: 'upload',
-        //         eager: [{width: 450, height: 250}]
-        // })
-        // // console.log(sizedPic);
-        // pureMealInfo.cloudImage = sizedPic.eager[0].url
-
-        // cloudinary.search.expression(`public_id:${sizedPic.public_id}`).execute().then(result => {
-        //     console.log(result);
-        // })
         console.log(pureMealInfo);
-        // res.json(pureMealInfo);
         let totalCal = getMeal.getTotalCalories(pureMealInfo)
 
 

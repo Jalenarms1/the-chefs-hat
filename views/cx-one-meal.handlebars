@@ -1,0 +1,76 @@
+<div class="row w-100">
+    <div class="row d-flex flex-wrap w-75 m-auto mt-3">
+        
+        <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-12 my-2">
+            <div class="card shadow" style="width: 100%;">
+                <img src="{{meal.image}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{meal.name}}</h5>
+                    <p class="card-text">Contains: {{#each meal.main_courses as |mainCourse|}}<span>{{mainCourse.name}}, </span>{{/each}}
+                    {{#each meal.sides as |side|}}<span>{{side.name}}, </span>{{/each}}
+                    {{#each meal.desserts as |dessert|}}<span>{{dessert.name}}, </span>{{/each}}
+                    {{#each meal.drinks as |drink|}}<span>{{drink.name}}, </span>{{/each}}
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+    
+        
+        <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-12 my-2 scroll-this ml-5">
+            <table class="my-3">
+                <tr>
+                    <th>Items</th>
+                    <th>Calories <small>(per serving)</small></th>
+                </tr>
+                {{#each meal.main_courses as |mainCourse|}}
+                <tr>
+                    <td>{{mainCourse.name}}</td>
+                    <td>{{mainCourse.calories}}</td>
+                </tr>
+                {{/each}}
+                {{#each meal.sides as |side|}}
+                <tr>
+                    <td>{{side.name}}</td>
+                    <td>{{side.calories}}</td>
+                </tr>
+                {{/each}}
+                {{#each meal.desserts as |dessert|}}
+                <tr>
+                    <td>{{dessert.name}}</td>
+                    <td>{{dessert.calories}}</td>
+                </tr>
+                {{/each}}
+                {{#each meal.drinks as |drink|}}
+                <tr>
+                    <td>{{drink.name}}</td>
+                    <td>{{drink.calories}}</td>
+                </tr>
+                {{/each}}
+                <tr>
+                    <th>Total calories</th>
+                    <td>{{totalCal}}</td> 
+                </tr>
+
+            </table>
+
+            <h2 class="mt-5">Customer Reviews</h2>
+
+            <div class="review-list mb-5">
+                {{#unless meal.reviews}}
+                <p>None yet.</p>
+                {{/unless}}
+                <ul class="list-group list-group-flush">
+                    {{#each meal.reviews as |review|}}
+                    <li class="list-group-item my-2">{{review.rating}}/5 {{review.content}}</li>
+                    {{/each}}
+                
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+    
+</div>

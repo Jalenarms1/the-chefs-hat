@@ -15,7 +15,7 @@ This restaurant does not currently have any meals listed on their menu</div>
             <div class="card-body">
                 <h5 class="card-title">{{meal.name}}</h5>
                 <p class="card-text">Contains: {{#each meal.main_courses as |mainCourse|}}<span>{{mainCourse.name}}, </span>{{/each}} {{#each meal.sides as |side|}}<span>{{side.name}}, </span>{{/each}} {{#each meal.drinks as |drink|}}<span>{{drink.name}}, </span>{{/each}} {{#each meal.desserts as |dessert|}}<span>{{dessert.name}}, </span>{{/each}}</p>
-                <a href="/user/meal/{{meal.id}}"  class="btn btn-outline-dark">View Meal</a>
+                <a href="/catalog/meal/{{meal.id}}"  class="btn btn-outline-dark">View Meal</a>
             </div>
         </div>
     </div>
