@@ -16,8 +16,6 @@ const cloudinary = require("cloudinary").v2;
 // main page that will prompt user for choice between viewing catalog of reataurants, signing up or loggin in
 router.get("/", loginCheckForHomePage, (req, res) => {
 
-
-
     res.render("homepage", {
         isLoggedIn: req.session.isLoggedIn,
         currUserId: req.session.user_id
@@ -52,6 +50,7 @@ router.get("/catalog", async (req, res) => {
 
         res.render('cx-restaurant-views', {
             isLoggedIn: req.session.isLoggedIn,
+            currUserId: req.session.user_id,
             restaurants
         })
 
@@ -64,12 +63,68 @@ router.get("/catalog", async (req, res) => {
 
 // if the user clicks on a particular restaurant to view
 router.get("/catalog/:id", async (req, res) => {
-    
+    try{
+        let currRestaurant = await Restaurant.findByPk(req.params.id);
+
+        let restaurant = currRestaurant.get({plain: true})
+
+        let mealsData = await Meal.findAll({
+            where: {
+                restaurantId: currRestaurant.id
+            },
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
+
+        // console.log(mealsData);
+
+        let allMeals = mealsData.map(item => {
+            return item.get({plain:true})
+        })
+        
+        console.log(allMeals)
+
+        if(allMeals){
+            res.render("cx-restaurant-meals", {
+                isLoggedIn: req.session.isLoggedIn,
+                currUserId: req.session.user_id,
+                meals: allMeals,
+                restaurant
+
+
+            })
+        }
+    }catch(err){
+        console.log(err);
+        res.json(err)
+    }
 })
 
 // when a non-account-holder trys to access a certail meal within that restaurant's menu
-router.get("/catalog/:id/:mealId/", (req, res) => {
+router.get("/catalog/meal/:mealId/", async (req, res) => {
+    try{
+        let getMeal = await Meal.findByPk(req.params.mealId, {
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
 
+        let pureMealInfo = getMeal.get({plain: true});
+
+        console.log(pureMealInfo);
+        let totalCal = getMeal.getTotalCalories(pureMealInfo)
+
+
+
+        res.render("cx-one-meal", {
+            meal: pureMealInfo,
+            isLoggedIn: req.session.isLoggedIn,
+            currUserId: req.session.user_id,
+            totalCal
+        })
+
+
+    } catch(err){
+        console.log(err);
+        res.json(err)
+    }
 })
 
 // when a non-account-holder trys to access a certail meal's reviews 
@@ -88,15 +143,27 @@ router.get("/user/add", loginCheck, (req, res) => {
 // page to construct a meal 
 router.get("/user/create", loginCheck, async (req, res) => {
     try{
+        
         let mealItems = await Restaurant.findOne({
             where: {
-                id: req.session.user_id
+                ownerId: req.session.user_id
             },
             include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
         })
+        console.log(mealItems);
+        
 
         let pureMealItemList = mealItems.get({plain: true});
         console.log(pureMealItemList);
+
+        if(pureMealItemList.main_courses[0] == null && pureMealItemList.sides[0] == null && pureMealItemList.drinks[0] == null && pureMealItemList.desserts[0] == null){
+            res.render("addnewfoods", {
+                isLoggedIn: req.session.isLoggedIn,
+                currUserId: req.session.user_id,
+                needToAdd: true
+            })
+            return 
+        }
 
         res.render("mealcreation", {
             isLoggedIn: req.session.isLoggedIn,
@@ -236,18 +303,7 @@ router.get("/user/meal/:id", loginCheck, async (req, res) => {
 
         let pureMealInfo = getMeal.get({plain: true});
 
-        // let sizedPic = await cloudinary.uploader.explicit(pureMealInfo.image, {
-        //     type: 'upload',
-        //         eager: [{width: 450, height: 250}]
-        // })
-        // // console.log(sizedPic);
-        // pureMealInfo.cloudImage = sizedPic.eager[0].url
-
-        // cloudinary.search.expression(`public_id:${sizedPic.public_id}`).execute().then(result => {
-        //     console.log(result);
-        // })
         console.log(pureMealInfo);
-        // res.json(pureMealInfo);
         let totalCal = getMeal.getTotalCalories(pureMealInfo)
 
 

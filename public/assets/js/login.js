@@ -29,6 +29,8 @@ const userLogin = async (event) => {
 const newSignup = async (event) => {
     event.preventDefault();
 
+    
+
     const image = inputImg.files[0];
     const reader = new FileReader;
 
@@ -38,6 +40,19 @@ const newSignup = async (event) => {
     const address = document.querySelector('#address');
     const phoneNumber = document.querySelector('#formPhone');
     const restName = document.querySelector('#formRest');
+
+    const allFields = document.querySelectorAll(".check");
+    console.log(allFields);
+
+    for(i = 0;i < allFields.length;i++){
+        if(!allFields[i].checkValidity()){
+            allFields[i].classList.add("is-invalid");
+            return
+        }
+
+    }
+    
+
 
     console.log(owner);
     console.log(email);

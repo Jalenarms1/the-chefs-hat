@@ -45,7 +45,7 @@ router.post("/signup/image", async (req, res) => {
 // }
 router.post("/signup", async (req, res) => {
     try{
-        let {image} = req.body
+        let {image, owner, email, password, restName, address, phoneNumber} = req.body
         
         let newCloudPic = await cloudinary.uploader.upload(image, options);
         console.log(newCloudPic);
@@ -57,34 +57,37 @@ router.post("/signup", async (req, res) => {
 
         console.log(sizedPic);
 
-        let newOwner = await Owner.create({
-            fullName: req.body.owner,
-            email: req.body.email,
-            password: req.body.password
-        })
+        if(image && owner && email && password && restName && address && phoneNumber){
 
-        let newRestaurant = await Restaurant.create({
-            name: req.body.restName,
-            image: sizedPic.eager[0].url,
-            ownerId: newOwner.id,
-            address: req.body.address,
-            phoneNumber: req.body.phoneNumber
-        })
-
-        console.log(newRestaurant);
-
-        req.session.save(() => {
-            req.session.isLoggedIn = true,
-            req.session.user_id = newOwner.id,
-
-            //change to path of profile page
-            res.render("homepage", {
-                isLoggedIn: req.session.isLoggedIn,
-                currUserId: req.session.user_id
+            let newOwner = await Owner.create({
+                fullName: req.body.owner,
+                email: req.body.email,
+                password: req.body.password
             })
 
-        })
+            let newRestaurant = await Restaurant.create({
+                name: req.body.restName,
+                image: sizedPic.eager[0].url,
+                ownerId: newOwner.id,
+                address: req.body.address,
+                phoneNumber: req.body.phoneNumber
+            })
 
+            console.log(newRestaurant);
+            
+            req.session.save(() => {
+                req.session.isLoggedIn = true,
+                req.session.user_id = newOwner.id,
+                
+                //change to path of profile page
+                res.render("user-profile", {
+                    isLoggedIn: req.session.isLoggedIn,
+                    currUserId: req.session.user_id
+                })
+                
+            })
+        
+        }
 
     } catch(err){
         console.log(err);
