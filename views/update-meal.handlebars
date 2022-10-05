@@ -1,16 +1,16 @@
-<div class="wrap-updater w-75 m-auto d-flex justify-content-center my-5 border border-dark rounded">
+<div class="wrap-create-meal w-75 m-auto form">
 
-    <form class="form-bg"
-        <header class="bg-light text-dark">
-            <div class="mb-3 text-center">
+    <form class="m-3 form-bg bg-white">
+        <header class="bg-dark">
+            <div class="text-light text-center py-2">
                 <label for="creationName" class="form-label">
                     <h2>Make your changes below</h2></label>
-                <input type="text" class="form-control" id="creation" aria-describedby="creation" value="{{itemsAlready.name}}">
+                <input type="text" class="form-control w-25 mx-3" id="creation" aria-describedby="creation" value="{{itemsAlready.name}}">
             </div>
         </header>
 
         <div class="p-3 row justify-content-center">
-            <div class="col-5 card m-2">
+            <div class="col-5 card scroll-bg m-2">
                 <div class="card-body">
                     <H3>Main dish</H3>
                     {{#each itemsAlready.main_courses as |mainCourse|}}
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="col-5 card m-2">
+            <div class="col-5 card scroll-bg m-2">
                 <div class="card-body">
                     <H3>Sides</H3>
                     {{#each itemsAlready.sides as |side|}}
@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="col-5 card m-2">
+            <div class="col-5 card scroll-bg m-2">
                 <div class="card-body">
                     <H3>Drinks</H3>
                     {{#each itemsAlready.drinks as |drink|}}
@@ -54,7 +54,7 @@
                 </div>
             </div>
 
-            <div class="col-5 card m-2">
+            <div class="col-5 card scroll-bg m-2">
                 <div class="card-body">
                     <H3>Desserts</H3>
                     {{#each itemsAlready.desserts as |dessert|}}
@@ -69,24 +69,16 @@
             </div>
         </div>
 
-        <div class="card form-bg text-white">
+        <div class="card scroll-bg w-50 m-3">
             <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div class="wrap-new-img">
-
-                        <h4>Update Image</h4>
-                        <input type="file" name="upload" id="file-pick">
-                    </div>
-                    <div class="button-wrap">
-                        <button type="submit" class="btn btn-outline-dark">Update</button>
-
-                    </div>
-                </div>
-                
-                
+                <h4>Update your image here</h4>
+                <input type="file" name="upload" id="file-pick">
             </div>
         </div>
 
-        
+        <div class="w-50">
+            <button id="new-meal-btn" class="btn btn-outline-dark w-25 m-3">Update</button>
+            <img class="hide" id="loading-img-update" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" alt="loading" style="width: 30%;">
+        </div>
     </form>
 </div>

@@ -2,10 +2,12 @@ let reviewBody = document.querySelector("#review-body");
 let rating = document.querySelector("#rating-select");
 let mealId = document.querySelector("#meal-id");
 let hiddenId = document.querySelector("#hidden")
+let loadingImgCreate = document.querySelector("#loading-img-create");
 
 // Place script code here
 async function newFormHandler(event) {
     event.preventDefault();
+    loadingImgCreate.classList.remove("hide");
 
     let mealName = document.querySelector("#creationName");
 

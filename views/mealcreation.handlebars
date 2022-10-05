@@ -1,6 +1,6 @@
 <div class="wrap-create-meal w-75 m-auto form">
 
-    <form class=" m-3 form-bg">
+    <form class="m-3 form-bg bg-white">
         <header class="bg-dark">
             <div class="text-light text-center py-2">
                 <label for="creationName" class="form-label">
@@ -11,7 +11,7 @@
         </header>
 
         <div class="p-1 row justify-content-center">
-            <div class="col-5 card m-1">
+            <div class="col-5 card scroll-bg m-1">
                 <div class="card-body">
                     <H3>Main dish</H3>
                     {{#each mealItems.main_courses as |main|}}
@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="col-5 card m-1">
+            <div class="col-5 card scroll-bg m-1">
                 <div class="card-body">
                     <H3>Sides</H3>
                     {{#each mealItems.sides as |side|}}
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="col-5 card m-1">
+            <div class="col-5 card scroll-bg m-1">
                 <div class="card-body">
                     <H3>Drinks</H3>
                     {{#each mealItems.drinks as |drink|}}
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="col-5 card m-1">
+            <div class="col-5 card scroll-bg m-1">
                 <div class="card-body">
                     <H3>Deserts</H3>
                     {{#each mealItems.desserts as |dessert|}}
@@ -52,15 +52,121 @@
             </div>
         </div>
 
-        <div class="card w-50 m-3">
+        <div class="card scroll-bg w-50 m-3">
             <div class="card-body">
                 <h4>Upload Your Image Here!</h4>
                 <input type="file" name="upload" id="file-pick">
             </div>
         </div>
 
-        <div class="d-grid gap-2">
+        <div class="w-50">
             <button id="new-meal-btn" class="btn btn-outline-dark w-25 m-3">Create!</button>
+            <img class="hide" id="loading-img-create" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" alt="loading" style="width: 30%;">
         </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="wrap-updater form  w-75 m-auto d-flex justify-content-center my-5 border border-dark rounded">
+
+    <form class="form-bg">
+        <header class="bg-dark">
+            <div class="text-light text-center">
+                <label for="creationName" class="form-label">
+                    <h2>Make your changes below</h2></label>
+                <input type="text" class="form-control" id="creation" aria-describedby="creation" value="{{itemsAlready.name}}">
+            </div>
+        </header>
+
+        <div class="p-3 row justify-content-center">
+            <div class="col-5 card m-2">
+                <div class="card-body">
+                    <H3>Main dish</H3>
+                    {{#each itemsAlready.main_courses as |mainCourse|}}
+                    <input type="checkbox" checked="true" class="form-check-input main">
+                    <label class="form-check-label" for="drinks">{{mainCourse.name}}</label>
+                    {{/each}}
+                    {{#each availableMainItems as |mainCourse|}}
+                    <input type="checkbox" class="form-check-input main">
+                    <label class="form-check-label" for="drinks">{{mainCourse.name}}</label>
+                    {{/each}}
+                    {{!-- <input type="checkbox" class="form-check-input main" id="mainCheck">
+                    <label class="form-check-label" for="Main dish">Example</label> --}}
+                </div>
+            </div>
+
+            <div class="col-5 card m-2">
+                <div class="card-body">
+                    <H3>Sides</H3>
+                    {{#each itemsAlready.sides as |side|}}
+                    <input type="checkbox" checked="true" class="form-check-input side">
+                    <label class="form-check-label" for="drinks">{{side.name}}</label>
+                    {{/each}}
+                    {{#each availableSideItems as |side|}}
+                    <input type="checkbox" class="form-check-input side">
+                    <label class="form-check-label" for="drinks">{{side.name}}</label>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="col-5 card m-2">
+                <div class="card-body">
+                    <H3>Drinks</H3>
+                    {{#each itemsAlready.drinks as |drink|}}
+                    <input type="checkbox" checked="true" class="form-check-input drink">
+                    <label class="form-check-label" for="drinks">{{drink.name}}</label>
+                    {{/each}}
+                    {{#each availableDrinkItems as |drink|}}
+                    <input type="checkbox" class="form-check-input drink">
+                    <label class="form-check-label" for="drinks">{{drink.name}}</label>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="col-5 card m-2">
+                <div class="card-body">
+                    <H3>Desserts</H3>
+                    {{#each itemsAlready.desserts as |dessert|}}
+                    <input type="checkbox" checked="true" class="form-check-input dessert">
+                    <label class="form-check-label" for="drinks">{{dessert.name}}</label>
+                    {{/each}}
+                    {{#each availableDessertItems as |dessert|}}
+                    <input type="checkbox" class="form-check-input dessert">
+                    <label class="form-check-label" for="drinks">{{dessert.name}}</label>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+        <div class="card form-bg text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div class="wrap-new-img">
+
+                        <h4>Update Image</h4>
+                        <input type="file" name="upload" id="file-pick">
+                    </div>
+                    <div class="button-wrap">
+                        <button type="submit" class="btn btn-outline-dark">Update</button>
+
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+
+        
     </form>
 </div>
