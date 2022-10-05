@@ -6,7 +6,7 @@ As a user I want to be able to create an account to showcase the menu items avai
 
 Link to the deployed application :
 
-[Deployed URL]()
+[Deployed URL](https://fathomless-oasis-00735.herokuapp.com/)
 
 The project repository can be viewed here:
 
