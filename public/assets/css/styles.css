@@ -37,14 +37,14 @@ h1, h2, h3, th, td{
 
 .catalog-choice{
     background-image: 
-    linear-gradient(rgba(255, 251, 234, 0.75), rgba(117, 60, 117, .75)),
+    linear-gradient(rgba(197, 163, 207, 0.65), rgba(117, 60, 117, .8)),
     url("https://www.touchbistro.com/wp-content/uploads/2021/08/restaurant-interior-design-ideas-thumbnail.jpg");
     text-decoration: none;             
 }
 
 .signup-choice{
     background-image: 
-    linear-gradient(rgba(163, 163, 162, 0.75), rgba(44, 38, 44, 0.75)),
+    linear-gradient(rgba(65, 65, 65, 0.85), rgba(44, 38, 44, 0.8)),
     url("https://us.123rf.com/450wm/karandaev/karandaev1606/karandaev160600383/58872226-herbs-and-spices-over-black-stone-background-top-view-with-copy-space.jpg?ver=6");
     text-decoration: none;             
 
