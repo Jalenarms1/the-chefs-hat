@@ -15,7 +15,8 @@ Owner.hasOne(Restaurant, {
 });
 
 Restaurant.belongsTo(Owner, {
-    foreignKey: 'owner_id'
+    foreignKey: 'owner_id',
+    onDelete: 'CASCADE'
 });
 
 Restaurant.hasMany(Meal, {
@@ -24,7 +25,8 @@ Restaurant.hasMany(Meal, {
 
 
 Meal.belongsTo(Restaurant, {
-    foreignKey: 'restaurant_id'
+    foreignKey: 'restaurant_id',
+    onDelete: 'CASCADE'
 });
 
 Restaurant.hasMany(MainCourse, {

@@ -9,10 +9,18 @@ body{
     background-size: cover;
     /* background-color: #FAD961; */
     /* background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%); */
-
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     
     
 
+}
+
+h1, h2, h3, th, td{
+    font-family: 'Oswald', sans-serif;
+}
+
+.scroll-bg{
+    background-color: rgba(141, 207, 255, .7);
 }
 
 .form-bg{
@@ -87,7 +95,7 @@ body{
 
 .scroll-this{
     border: 1px solid black;
-    height: 250px;
+    height: 280px;
     overflow: auto;
 }
 
@@ -95,4 +103,7 @@ td,th{
     border: 1px solid black;
     padding: 2%;
     width: 175px;
+}
+.hide{
+    display: none;
 }

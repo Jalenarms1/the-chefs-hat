@@ -3,7 +3,13 @@ const { Review } = require("../../models");
 
 router.post("/new/:id", async (req, res) => {
     try {
-        let newReview = await Review.create(req.body)
+        let newReview = await Review.create({
+            mealId: req.params.id,
+            rating: req.body.rating,
+            content: req.body.content
+        })
+
+
         if(newReview.rating < 3){
             newReview.sendBadReview(req.body.ownerId, req.body.content);
         }
