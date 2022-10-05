@@ -68,11 +68,11 @@ async function newFormHandler(event) {
            
         })
         console.log(response);
-        // if (response.ok) {
-        //     document.location.replace('/user/create');
-        // } else {
-        //     alert('Failed to load');
-        // }
+        if (response.ok) {
+            document.location.replace('/user/profile');
+        } else {
+            alert('Failed to load');
+        }
 
     });
     reader.readAsDataURL(imageFile);
@@ -95,7 +95,7 @@ const delMeal = async (event) => {
 
         })
         if(response.ok){
-            location.replace("/meal")
+            location.replace("/user/profile")
     }
 } catch (err){
     console.log(err);

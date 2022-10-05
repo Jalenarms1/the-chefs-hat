@@ -16,7 +16,7 @@
                     <H3>Main dish</H3>
                     {{#each mealItems.main_courses as |main|}}
                     <input type="checkbox" class="form-check-input main" id="mainCheck" value="{{main.id}}">
-                    <label class="form-check-label" for="drinks">{{main.name}} <small>({{main.calories}} calories)</small></label>
+                    <label class="form-check-label" for="drinks">{{main.name}}</label>
                     {{/each}}
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <H3>Sides</H3>
                     {{#each mealItems.sides as |side|}}
                     <input type="checkbox" class="form-check-input sides" id="sideCheck" value="{{side.id}}">
-                    <label class="form-check-label" for="drinks">{{side.name}} <small>({{side.calories}} calories)</small></label>
+                    <label class="form-check-label" for="drinks">{{side.name}}</label>
                     {{/each}}
                 </div>
             </div>
@@ -36,7 +36,7 @@
                     <H3>Drinks</H3>
                     {{#each mealItems.drinks as |drink|}}
                     <input type="checkbox" class="form-check-input drinks" id="drinkCheck" value="{{drink.id}}">
-                    <label class="form-check-label" for="drinks">{{drink.name}} <small>({{drink.calories}} calories)</small></label>
+                    <label class="form-check-label" for="drinks">{{drink.name}}</label>
                     {{/each}}
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <H3>Deserts</H3>
                     {{#each mealItems.desserts as |dessert|}}
                     <input type="checkbox" class="form-check-input drinks" id="mainCheck" value="{{dessert.id}}">
-                    <label class="form-check-label" for="drinks">{{dessert.name}} <small>({{dessert.calories}} calories)</small></label>
+                    <label class="form-check-label" for="drinks">{{dessert.name}}</label>
                     {{/each}}
                 </div>
             </div>
