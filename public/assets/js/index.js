@@ -2,7 +2,6 @@ let reviewBody = document.querySelector("#review-body");
 let rating = document.querySelector("#rating-select");
 let mealId = document.querySelector("#meal-id");
 let hiddenId = document.querySelector("#hidden")
-console.log(hiddenId);
 
 // Place script code here
 async function newFormHandler(event) {
@@ -29,7 +28,6 @@ async function newFormHandler(event) {
         });
 
     }
-    console.log(emptyArrayToStoreMainValues);
 
     sidesArr.forEach(box => {
         if(box.checked){
@@ -49,14 +47,8 @@ async function newFormHandler(event) {
         }
     });
 
-    console.log(image.files[0]);
     let imageFile = image.files[0];
     let reader = new FileReader();
-
-    console.log(emptyArrayToStoreMainValues);
-    console.log(emptyArrayToStoresidesValues);
-    console.log(emptyArrayToStoredrinksValues);
-    console.log(emptyArrayToStoreDessertValues);
 
     
     reader.addEventListener('load', async () => {
@@ -76,12 +68,11 @@ async function newFormHandler(event) {
             
            
         })
-        console.log(response);
-        // if (response.ok) {
-        //     document.location.replace('/user/profile');
-        // } else {
-        //     alert('Failed to load');
-        // }
+        if (response.ok) {
+            document.location.replace('/user/profile');
+        } else {
+            alert('Failed to load');
+        }
 
     });
     reader.readAsDataURL(imageFile);
@@ -100,7 +91,6 @@ const delAcct = async () => {
             method: 'DELETE',
             body: {}
         })
-        console.log(response);
 
         if(response.ok){
             location.replace("/")
@@ -120,7 +110,6 @@ if(delAcctBtn){
 
 const delMeal = async (event) => {
     try{
-        console. log(event);
 
         let response = await fetch(`/api/user/meal/${event.target.id}`, {
             method: 'DELETE',
@@ -142,7 +131,6 @@ let sendRevBtn = document.querySelector("#send-review");
 
 const postReview = async () => {
     try{
-        console.log(hiddenId.value);
 
         let response = await fetch(`/api/reviews/new/${mealId.value}`, {
             method: 'POST',

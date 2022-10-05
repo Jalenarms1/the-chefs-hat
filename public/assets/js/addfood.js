@@ -7,7 +7,6 @@ let dessertsBtn = document.querySelector('#desertBtn');
 
 async function newFood(event) {
   event.preventDefault();
-  console.log(main_course_name.value);
  
   const response = await fetch(`/api/user/main-course`, {
     method: 'POST',

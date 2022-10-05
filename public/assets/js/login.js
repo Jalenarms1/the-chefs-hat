@@ -52,10 +52,6 @@ const newSignup = async (event) => {
 
     }
     
-
-
-    console.log(owner);
-    console.log(email);
     reader.addEventListener("load", async () => {
 
         if(image){
