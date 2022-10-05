@@ -139,12 +139,37 @@ router.post("/logout", (req, res) => {
     if(req.session.isLoggedIn){
         req.session.destroy(() => {
             res.status(204).end();
-            res.render("/", {
+            res.render("homepage", {
             })
             
         })
     }
 });
+
+router.delete("/delete-account", async(req, res) => {
+    try{
+        
+        let deletedAccount = await Owner.destroy({
+            where: {
+                id: req.session.user_id
+            }
+        })
+        
+        if(req.session.isLoggedIn){
+            req.session.destroy(() => {
+                res.status(204).end();
+                res.render("homepage", {
+                })
+                
+            })
+        }
+        
+
+    }catch(err){
+        console.log(err);
+        res.json(err)
+    }
+})
 
 //post, put, delete to add,edit and remove new main-course options for when constructing a new meal
 // format {
@@ -420,6 +445,7 @@ router.delete("/drink/:id", async (req, res) => {
 //
 router.post("/meal", async (req, res) => {
     try{
+        console.log(req.body);
         let {image} = req.body;
 
         let imgData = await cloudinary.uploader.upload(image, options);
@@ -452,7 +478,7 @@ router.post("/meal", async (req, res) => {
 
         }
 
-        if(req.body.sides){
+        if(req.body.sideIds){
             req.body.sideIds.map(item => {
                 constructMealTicket.push({
                     mealId: newMeal.id,

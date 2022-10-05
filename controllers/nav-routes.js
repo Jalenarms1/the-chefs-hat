@@ -65,8 +65,9 @@ router.get("/catalog", async (req, res) => {
 router.get("/catalog/:id", async (req, res) => {
     try{
         let currRestaurant = await Restaurant.findByPk(req.params.id);
-
+        console.log(currRestaurant);
         let restaurant = currRestaurant.get({plain: true})
+        console.log(restaurant);
 
         let mealsData = await Meal.findAll({
             where: {
@@ -103,7 +104,7 @@ router.get("/catalog/:id", async (req, res) => {
 router.get("/catalog/meal/:mealId/", async (req, res) => {
     try{
         let getMeal = await Meal.findByPk(req.params.mealId, {
-            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}, {model: Review}]
         })
 
         let pureMealInfo = getMeal.get({plain: true});
@@ -111,13 +112,21 @@ router.get("/catalog/meal/:mealId/", async (req, res) => {
         console.log(pureMealInfo);
         let totalCal = getMeal.getTotalCalories(pureMealInfo)
 
+        let currRestaurant = await Restaurant.findByPk(pureMealInfo.restaurantId, {
+            include: [{model: Owner}]
+        });
 
+        let restaurant = currRestaurant.get({
+            plain: true
+        })
+        console.log(restaurant);
 
         res.render("cx-one-meal", {
             meal: pureMealInfo,
             isLoggedIn: req.session.isLoggedIn,
             currUserId: req.session.user_id,
-            totalCal
+            totalCal,
+            restaurant
         })
 
 
@@ -298,7 +307,7 @@ router.get("/user/meal/create/:id", async (req, res) => {
 router.get("/user/meal/:id", loginCheck, async (req, res) => {
     try{
         let getMeal = await Meal.findByPk(req.params.id, {
-            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}, {model: Review}]
         })
 
         let pureMealInfo = getMeal.get({plain: true});

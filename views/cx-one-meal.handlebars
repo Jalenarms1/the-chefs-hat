@@ -1,3 +1,6 @@
+<div class="restName mb-2 px-4 py-2 bg-dark text-light w-25">
+    <h3>{{restaurant.name}}</h3>
+</div>
 <div class="row w-100">
     <div class="row d-flex flex-wrap w-75 m-auto mt-3">
         
@@ -17,7 +20,7 @@
         </div>
     
         
-        <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-12 my-2 scroll-this ml-5">
+        <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-12 my-2 scroll-this ml-5 scroll-bg">
             <table class="my-3">
                 <tr>
                     <th>Items</th>
@@ -54,19 +57,42 @@
 
             </table>
 
+            <div class="scroll-footer py-2">
+                <h2 class="">Leave a review</h2>
+
+                <select name="rating" id="rating-select">
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+                
+                <input type="hidden" id="meal-id" value="{{meal.id}}">
+                <label for="review-body">Tell us the reason for your rating. We would love to hear!</label>
+                <input type="text" class="p-1" id="review-body"> <button id="send-review" class="btn btn-outline-dark">>></button>
+                <input type="hidden" id="hidden" value="{{restaurant.owner.id}}">
+
+            </div>
+            <div class="p-2 hide" id="has-been">
+                <small>Thank you. Your review was sent.</small>
+
+            </div>
+
             <h2 class="mt-5">Customer Reviews</h2>
 
-            <div class="review-list mb-5">
-                {{#unless meal.reviews}}
-                <p>None yet.</p>
-                {{/unless}}
-                <ul class="list-group list-group-flush">
-                    {{#each meal.reviews as |review|}}
-                    <li class="list-group-item my-2">{{review.rating}}/5 {{review.content}}</li>
-                    {{/each}}
-                
-                </ul>
-            </div>
+                <div class="review-list mb-5">
+                    {{#unless meal.reviews}}
+                    <p>None yet.</p>
+                    {{/unless}}
+                    <ul class="list-group list-group-flush">
+                        {{#each meal.reviews as |review|}}
+                        <li class="list-group-item my-2">{{review.rating}}/5 {{review.content}}</li>
+                        {{/each}}
+                    
+                    </ul>
+                </div>
+           
 
 
         </div>

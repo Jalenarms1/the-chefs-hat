@@ -1,3 +1,8 @@
+let reviewBody = document.querySelector("#review-body");
+let rating = document.querySelector("#rating-select");
+let mealId = document.querySelector("#meal-id");
+let hiddenId = document.querySelector("#hidden")
+console.log(hiddenId);
 
 // Place script code here
 async function newFormHandler(event) {
@@ -49,6 +54,10 @@ async function newFormHandler(event) {
     let reader = new FileReader();
 
     console.log(emptyArrayToStoreMainValues);
+    console.log(emptyArrayToStoresidesValues);
+    console.log(emptyArrayToStoredrinksValues);
+    console.log(emptyArrayToStoreDessertValues);
+
     
     reader.addEventListener('load', async () => {
         let response = await fetch(`/api/user/meal`, {
@@ -68,11 +77,11 @@ async function newFormHandler(event) {
            
         })
         console.log(response);
-        if (response.ok) {
-            document.location.replace('/user/profile');
-        } else {
-            alert('Failed to load');
-        }
+        // if (response.ok) {
+        //     document.location.replace('/user/profile');
+        // } else {
+        //     alert('Failed to load');
+        // }
 
     });
     reader.readAsDataURL(imageFile);
@@ -84,6 +93,30 @@ if(document.querySelector('#new-meal-btn')){
     document.querySelector('#new-meal-btn').addEventListener('click', newFormHandler);
 }
 const deleteBtn = document.querySelector(".delete-btn");
+
+const delAcct = async () => {
+    try{
+        let response = await fetch('/api/user/delete-account', {
+            method: 'DELETE',
+            body: {}
+        })
+        console.log(response);
+
+        if(response.ok){
+            location.replace("/")
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+}
+
+let delAcctBtn = document.querySelector("#del-acct-btn")
+
+if(delAcctBtn){
+    delAcctBtn.addEventListener("click", delAcct);
+}
+
 
 const delMeal = async (event) => {
     try{
@@ -97,10 +130,43 @@ const delMeal = async (event) => {
         if(response.ok){
             location.replace("/user/profile")
     }
-} catch (err){
-    console.log(err);
+    } catch (err){
+        console.log(err);
+    }
 }
+
+let mealUp = document.querySelector("#has-been")
+let hideSec = document.querySelector(".scroll-footer");
+
+let sendRevBtn = document.querySelector("#send-review");
+
+const postReview = async () => {
+    try{
+        console.log(hiddenId.value);
+
+        let response = await fetch(`/api/reviews/new/${mealId.value}`, {
+            method: 'POST',
+            headers: {"Content-Type": 'application/json'},
+            body: JSON.stringify({
+                ownerId: hiddenId.value,
+                content: reviewBody.value,
+                rating: rating.value
+            })
+        })
+
+        mealUp.classList.remove("hide");
+        hideSec.classList.add("hide");
+
+
+    }catch(err){
+        console.log(err);
+    }
 }
+
+if(sendRevBtn){
+    sendRevBtn.addEventListener("click", postReview);
+}
+
 if(deleteBtn){
     deleteBtn.addEventListener('click', delMeal );
 }
