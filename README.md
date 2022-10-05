@@ -14,6 +14,8 @@ The project repository can be viewed here:
 
 ## Description
 
+ Creating an application to help Restaurant owners to create and modify meals with ease of keeping track and creating new meals for their Restaurant.
+ This application allowing customer to see restaurants and menus they offer and customer can leave their reviews on specific meals they have tried.
 
 ## Table of Contents
 
@@ -26,6 +28,7 @@ The project repository can be viewed here:
 
 ## Technologies applied
 
+* Bootstrap
 * JavaScript
 * NodeJS
 * Express
