@@ -122,7 +122,7 @@ router.post("/login", async (req, res) => {
             req.session.user_id = reqUserSignIn.id,
 
             // change to path of profile page
-            res.render("homepage", {
+            res.render("user-profile", {
                 isLoggedIn: req.session.isLoggedIn,
                 currUserId: req.session.user_id
             })
@@ -139,8 +139,6 @@ router.post("/logout", (req, res) => {
     if(req.session.isLoggedIn){
         req.session.destroy(() => {
             res.status(204).end();
-            res.render("homepage", {
-            })
             
         })
     }
@@ -148,18 +146,23 @@ router.post("/logout", (req, res) => {
 
 router.delete("/delete-account", async(req, res) => {
     try{
+
+        let deleteRestaurant = await Restaurant.destroy({
+            where: {
+                ownerId: req.session.user_id
+            }
+        })
         
         let deletedAccount = await Owner.destroy({
             where: {
                 id: req.session.user_id
             }
         })
+
         
         if(req.session.isLoggedIn){
             req.session.destroy(() => {
                 res.status(204).end();
-                res.render("homepage", {
-                })
                 
             })
         }

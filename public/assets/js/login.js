@@ -52,18 +52,16 @@ const newSignup = async (event) => {
     loadingImgSignUp.classList.remove("hide")
     
 
-    const image = inputImg.files[0];
-    const reader = new FileReader;
-
+    
     const owner = document.querySelector('#formName');
     const email = document.querySelector('#formEmail');
     const password = document.querySelector('#formPass');
     const address = document.querySelector('#address');
     const phoneNumber = document.querySelector('#formPhone');
     const restName = document.querySelector('#formRest');
-
+    
     let fields = document.querySelectorAll(".form-control");
-
+    
     fields.forEach(item => {
         if(!item.checkValidity()){
             item.classList.add("is-invalid");
@@ -72,6 +70,8 @@ const newSignup = async (event) => {
         }
     })
     
+    const image = inputImg.files[0];
+    const reader = new FileReader;
     reader.addEventListener("load", async () => {
 
         if(image){

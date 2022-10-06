@@ -47,7 +47,6 @@ router.get("/catalog", async (req, res) => {
         
 
 
-
         res.render('cx-restaurant-views', {
             isLoggedIn: req.session.isLoggedIn,
             currUserId: req.session.user_id,
@@ -172,13 +171,15 @@ router.get("/user/create", loginCheck, async (req, res) => {
                 needToAdd: true
             })
             return 
+        }else{
+            res.render("mealcreation", {
+                isLoggedIn: req.session.isLoggedIn,
+                currUserId: req.session.user_id,
+                mealItems: pureMealItemList
+            })
+
         }
 
-        res.render("mealcreation", {
-            isLoggedIn: req.session.isLoggedIn,
-            currUserId: req.session.user_id,
-            mealItems: pureMealItemList
-        })
     } catch(err){
         console.log(err);
         res.json(err)
@@ -233,6 +234,9 @@ router.get("/user/profile", loginCheck, async (req, res) => {
 router.get("/user/meal/create/:id", async (req, res) => {
     try{
         console.log(req.body);
+        
+
+
         let mealToUpdate = await Meal.findByPk(req.params.id, {
             include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
         })
