@@ -4,6 +4,94 @@ let mealId = document.querySelector("#meal-id");
 let hiddenId = document.querySelector("#hidden")
 let loadingImgCreate = document.querySelector("#loading-img-create");
 let loadingImgUpdate = document.querySelector("#loading-img-update");
+let delMainBtn = document.querySelectorAll(".del-mainCourse");
+let delSideBtn = document.querySelectorAll(".del-side");
+let delDrinkBtn = document.querySelectorAll(".del-drink");
+let delDessertBtn = document.querySelectorAll(".del-dessert");
+
+const delMainCourse = async (event) => {
+    try{
+        console.log("Hello");
+        let response = await fetch(`/api/user/main-course/${event.target.id}`, {
+            method: 'DELETE'
+        })
+
+        if(response.ok){
+            location.replace("/user/inventory")
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
+if(delMainBtn){
+    delMainBtn.forEach(button => {
+        button.addEventListener("click", delMainCourse)
+    })
+}
+
+const delSideItem = async (event) => {
+    try{
+        console.log("Hello");
+        let response = await fetch(`/api/user/side-dish/${event.target.id}`, {
+            method: 'DELETE'
+        })
+
+        if(response.ok){
+            location.replace("/user/inventory")
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
+if(delSideBtn){
+    delSideBtn.forEach(button => {
+        button.addEventListener("click", delSideItem)
+    })
+}
+
+const delDrinkItem = async (event) => {
+    try{
+        console.log("Hello");
+        let response = await fetch(`/api/user/drink/${event.target.id}`, {
+            method: 'DELETE'
+        })
+
+        if(response.ok){
+            location.replace("/user/inventory")
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
+if(delDrinkBtn){
+    delDrinkBtn.forEach(button => {
+        button.addEventListener("click", delDrinkItem)
+    })
+}
+
+const delDessertItem = async (event) => {
+    try{
+        console.log("Hello");
+        let response = await fetch(`/api/user/dessert/${event.target.id}`, {
+            method: 'DELETE'
+        })
+
+        if(response.ok){
+            location.replace("/user/inventory")
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
+if(delDessertBtn){
+    delDessertBtn.forEach(button => {
+        button.addEventListener("click", delDessertItem)
+    })
+}
 
 // Place script code here
 async function newFormHandler(event) {

@@ -6,45 +6,71 @@
     <div class="heading-mainCourses my-2">
         <h4>Main Courses</h4>
     </div>
+    {{#unless restaurant.main_courses}}
+    <p>None yet. Add more items to your inventory <a href="/user/add" class="text-dark">here</a></p>
+    {{/unless}}
     {{#each restaurant.main_courses as |mainCourse|}}
     <div class="card m-1 col-4" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">{{mainCourse.name}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{mainCourse.calories}}</h6>
+        <div class="card-body d-flex justify-content-between">
+            <div class="wrap-card-details">
+                <h5 class="card-title">{{mainCourse.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{mainCourse.calories}}</h6>
+            </div>
+            <button id="{{mainCourse.id}}" class="btn btn-close del-mainCourse"></button>
         </div>
     </div>
     {{/each}}
      <div class="heading-sides my-2">
         <h4>Sides</h4>
     </div>
+    {{#unless restaurant.sides}}
+    <p>None yet. Add more items to your inventory <a href="/user/add" class="text-dark">here</a></p>
+    {{/unless}}
     {{#each restaurant.sides as |side|}}
     <div class="card m-1 col-4" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">{{side.name}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{side.calories}}</h6>
+        <div class="card-body d-flex justify-content-between">
+            <div class="wrap-card-details">
+                <h5 class="card-title">{{side.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{side.calories}}</h6>
+            </div>
+            <button id="{{side.id}}" class="btn btn-close del-side"></button>
         </div>
     </div>
     {{/each}}
      <div class="heading-drinks my-2">
         <h4>Drinks</h4>
     </div>
+    {{#unless restaurant.drinks}}
+    <p>None yet. Add more items to your inventory <a href="/user/add" class="text-dark">here</a></p>
+    {{/unless}}
     {{#each restaurant.drinks as |drink|}}
     <div class="card m-1 col-4" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">{{drink.name}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{drink.calories}}</h6>
+        <div class="card-body d-flex justify-content-between">
+            <div class="wrap-card-details">
+                <h5 class="card-title">{{drink.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{drink.calories}}</h6>
+            </div>
+            <button id="{{drink.id}}" class="btn btn-close del-drink"></button>
         </div>
+    
     </div>
     {{/each}}
      <div class="heading-desserts my-2">
         <h4>Desserts</h4>
     </div>
+    {{#unless restaurant.desserts}}
+    <p>None yet. Add more items to your inventory <a href="/user/add" class="text-dark">here</a></p>
+    {{/unless}}
     {{#each restaurant.desserts as |dessert|}}
     <div class="card m-1 col-4" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">{{dessert.name}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{dessert.calories}}</h6>
+        <div class="card-body d-flex justify-content-between">
+            <div class="wrap-card-details">
+                <h5 class="card-title">{{dessert.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{dessert.calories}}</h6>
+            </div>
+            <button id="{{dessert.id}}" class="btn btn-close del-dessert"></button>
         </div>
+        
     </div>
     {{/each}}
     
