@@ -9,6 +9,15 @@ let loadingImgUpdate = document.querySelector("#loading-img-update");
 async function newFormHandler(event) {
     event.preventDefault();
     loadingImgCreate.classList.remove("hide");
+    let fields = document.querySelectorAll(".form-control");
+
+    for(i = 0;i < fields.length;i++){
+        if(!fields[i].checkValidity()){
+            item.classList.add("is-invalid");
+            loadingImgCreate.classList.add("hide");
+            
+        } return 
+    }
 
     let mealName = document.querySelector("#creationName");
 
@@ -23,15 +32,7 @@ async function newFormHandler(event) {
     let image = document.querySelector('#file-pick');
     let dessertArr = document.querySelectorAll(".desserts")
 
-    let fields = document.querySelectorAll(".form-control");
-
-    fields.forEach(item => {
-        if(!item.checkValidity()){
-            item.classList.add("is-invalid");
-            loadingImgCreate.classList.add("hide");
-            return 
-        }
-    })
+    
 
     if(mainArr){
         mainArr.forEach(box => {
