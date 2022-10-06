@@ -4,10 +4,16 @@ let mainCourseBtn = document.querySelector('#mealBtn');
 let sideBtn = document.querySelector('#sideBtn');
 let drinksBtn = document.querySelector('#drinksBtn');
 let dessertsBtn = document.querySelector('#desertBtn');
+let loadingImgMain = document.querySelector("#loading-img-mainAdd");
+let loadingImgSide = document.querySelector("#loading-img-sideAdd");
+let loadingImgDrink = document.querySelector("#loading-img-drinkAdd");
+let loadingImgDessert = document.querySelector("#loading-img-dessertAdd");
+
 
 async function newFood(event) {
   event.preventDefault();
-  console.log(main_course_name.value);
+
+  loadingImgMain.classList.remove("hide");
  
   const response = await fetch(`/api/user/main-course`, {
     method: 'POST',
@@ -34,6 +40,8 @@ if(mainCourseBtn){
 
 async function newFoodSides(event) {
   event.preventDefault();
+  loadingImgSide.classList.remove("hide");
+
   
   const side_dish_name = document.querySelector('#sides');
   const side_calorie = document.querySelector('#sidecal');
@@ -62,6 +70,8 @@ if(sideBtn){
 
 async function drinksName(event) {
   event.preventDefault();
+  loadingImgDrink.classList.remove("hide");
+
   
   const drinks_name = document.querySelector('#drinks');
   const drinks_calorie = document.querySelector('#drinksCal');
@@ -89,8 +99,10 @@ if(drinksBtn){
 }
 
 
-async function desertsName(event) {
+async function dessertsName(event) {
   event.preventDefault();
+  loadingImgDessert.classList.remove("hide");
+
   
   const desserts_name = document.querySelector('#desert');
   const desserts_calories = document.querySelector('#desertCal');
@@ -113,7 +125,7 @@ async function desertsName(event) {
 }
 
 if(dessertsBtn){
-  dessertsBtn.addEventListener('click', desertsName);
+  dessertsBtn.addEventListener('click', dessertsName);
 }
 
 

@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 const nodemailer = require("nodemailer");
+const Owner = require("./Owner");
 
 const mailTransporter = nodemailer.createTransport({
     service: 'gmail',

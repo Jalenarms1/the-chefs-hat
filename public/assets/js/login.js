@@ -2,9 +2,13 @@
 const signupBtn = document.querySelector("#registerbtn");
 const loginBtn = document.querySelector("#submit-login");
 const inputImg = document.querySelector("#rest-pic");
+const loadingImgSignUp = document.querySelector("#loading-img-signup");
+const loadingImgLogin = document.querySelector("#loading-img-login");
 
 const userLogin = async (event) => {
     event.preventDefault();
+
+    loadingImgLogin.classList.remove("hide");
 
     // Collect values from the login form 
     const email = document.querySelector('#emailLog').value.trim();
@@ -29,6 +33,7 @@ const userLogin = async (event) => {
 const newSignup = async (event) => {
     event.preventDefault();
 
+    loadingImgSignUp.classList.remove("hide")
     
 
     const image = inputImg.files[0];
@@ -52,10 +57,6 @@ const newSignup = async (event) => {
 
     }
     
-
-
-    console.log(owner);
-    console.log(email);
     reader.addEventListener("load", async () => {
 
         if(image){
