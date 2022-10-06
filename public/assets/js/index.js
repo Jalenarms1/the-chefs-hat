@@ -160,3 +160,19 @@ if(sendRevBtn){
 if(deleteBtn){
     deleteBtn.addEventListener('click', delMeal );
 }
+
+const updateMeal = async (event) => {
+    try{
+        console.log(event);
+        let response = await fetch(`/api/user/meal/${event.target.id}`, {
+            method: 'PUT',
+            body: {}
+
+        })
+        if(response.ok){
+            location.replace("/user/profile")
+    }
+    } catch (err){
+        console.log(err);
+    }
+}
