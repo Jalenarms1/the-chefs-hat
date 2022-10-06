@@ -50,15 +50,19 @@ const newSignup = async (event) => {
     event.preventDefault();
 
     loadingImgSignUp.classList.remove("hide")
-    
-
-    
     const owner = document.querySelector('#formName');
     const email = document.querySelector('#formEmail');
     const password = document.querySelector('#formPass');
     const address = document.querySelector('#address');
     const phoneNumber = document.querySelector('#formPhone');
     const restName = document.querySelector('#formRest');
+
+    if(password.value.length < 8 ){
+        password.style.border = "1px solid red";
+        document.querySelector("#password-length-check").classList.remove("hide")
+        loadingImgLogin.classList.add("hide");
+        return
+    }
     
     let fields = document.querySelectorAll(".form-control");
     

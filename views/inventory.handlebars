@@ -26,15 +26,15 @@
                         <div class="upd-input d-flex flex-column">
                             <div class="item-name m-2">
                                 <label for="upd-item-name">Update Name</label>
-                                <input type="text" id="upd-item-name">
+                                <input type="text" id="upd-main-name">
                             </div>
                             <div class="item-calories px-2">
                                 <label for="upd-item-calories">Update Calories</label>
-                                <input type="text" class="w-25" id="upd-item-calories">
+                                <input type="text" class="w-25" id="upd-main-calories">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="{{mainCourse.id}}" class="btn btn-success">Update</button>
+                            <button id="{{mainCourse.id}}" class="btn btn-success upd-main-btn">Update</button>
                             <button class="btn btn-outline-dark" data-bs-dismiss="modal" data-bs-target="#itemModal">Go back</button>
                         </div>
                     </div>
@@ -66,15 +66,15 @@
                         <div class="upd-input d-flex flex-column">
                             <div class="item-name m-2">
                                 <label for="upd-item-name">Update Name</label>
-                                <input type="text" id="upd-item-name">
+                                <input type="text" id="upd-side-name">
                             </div>
                             <div class="item-calories px-2">
                                 <label for="upd-item-calories">Update Calories</label>
-                                <input type="text" class="w-25" id="upd-item-calories">
+                                <input type="text" class="w-25" id="upd-side-calories">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="{{side.id}}" class="btn btn-success">Update</button>
+                            <button id="{{side.id}}" class="btn btn-success upd-side-btn">Update</button>
                             <button class="btn btn-outline-dark" data-bs-dismiss="modal" data-bs-target="#itemModal">Go back</button>
                         </div>
                     </div>
@@ -106,15 +106,15 @@
                         <div class="upd-input d-flex flex-column">
                             <div class="item-name m-2">
                                 <label for="upd-item-name">Update Name</label>
-                                <input type="text" id="upd-item-name">
+                                <input type="text" id="upd-drink-name">
                             </div>
                             <div class="item-calories px-2">
                                 <label for="upd-item-calories">Update Calories</label>
-                                <input type="text" class="w-25" id="upd-item-calories">
+                                <input type="text" class="w-25" id="upd-drink-calories">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="{{drink.id}}" class="btn btn-success">Update</button>
+                            <button id="{{drink.id}}" class="btn btn-success upd-drink-btn">Update</button>
                             <button class="btn btn-outline-dark" data-bs-dismiss="modal" data-bs-target="#itemModal">Go back</button>
                         </div>
                     </div>
@@ -156,7 +156,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="{{dessert.id}}" class="btn btn-success">Update</button>
+                            <button id="{{dessert.id}}" class="btn btn-success upd-dessert-btn">Update</button>
                             <button class="btn btn-outline-dark" data-bs-dismiss="modal" data-bs-target="#itemModal">Go back</button>
                         </div>
                     </div>
@@ -169,3 +169,5 @@
     
 
 </div>
+
+<script src="/assets/js/inventory.js"></script>
