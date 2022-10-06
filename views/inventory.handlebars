@@ -22,19 +22,20 @@
             </div>
             <div class="modal fade" id="itemModal">
                 <div class="modal-dialog">
-                    <div class="modal-content">
+                    <div class="modal-content p-2">
                         <div class="upd-input d-flex flex-column">
                             <div class="item-name m-2">
                                 <label for="upd-item-name">Update Name</label>
                                 <input type="text" id="upd-item-name">
                             </div>
-                            <div class="item-calories">
+                            <div class="item-calories px-2">
                                 <label for="upd-item-calories">Update Calories</label>
                                 <input type="text" class="w-25" id="upd-item-calories">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-success">Update</button>
+                            <button id="{{mainCourse.id}}" class="btn btn-success">Update</button>
+                            <button class="btn btn-outline-dark" data-bs-dismiss="modal" data-bs-target="#itemModal">Go back</button>
                         </div>
                     </div>
                 </div>
@@ -55,7 +56,30 @@
                 <h5 class="card-title">{{side.name}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{side.calories}}</h6>
             </div>
-            <button id="{{side.id}}" class="btn btn-close del-side"></button>
+            <div class="wrap-choice-button d-flex flex-column">
+                <button id="{{side.id}}" class="btn btn-close del-side"></button>
+                <button class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#itemModal">✎</button>
+            </div>
+            <div class="modal fade" id="itemModal">
+                <div class="modal-dialog">
+                    <div class="modal-content p-2">
+                        <div class="upd-input d-flex flex-column">
+                            <div class="item-name m-2">
+                                <label for="upd-item-name">Update Name</label>
+                                <input type="text" id="upd-item-name">
+                            </div>
+                            <div class="item-calories px-2">
+                                <label for="upd-item-calories">Update Calories</label>
+                                <input type="text" class="w-25" id="upd-item-calories">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="{{side.id}}" class="btn btn-success">Update</button>
+                            <button class="btn btn-outline-dark" data-bs-dismiss="modal" data-bs-target="#itemModal">Go back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {{/each}}
@@ -72,7 +96,30 @@
                 <h5 class="card-title">{{drink.name}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{drink.calories}}</h6>
             </div>
-            <button id="{{drink.id}}" class="btn btn-close del-drink"></button>
+            <div class="wrap-choice-button d-flex flex-column">
+                <button id="{{drink.id}}" class="btn btn-close del-drink"></button>
+                <button class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#itemModal">✎</button>
+            </div>
+            <div class="modal fade" id="itemModal">
+                <div class="modal-dialog">
+                    <div class="modal-content p-2">
+                        <div class="upd-input d-flex flex-column">
+                            <div class="item-name m-2">
+                                <label for="upd-item-name">Update Name</label>
+                                <input type="text" id="upd-item-name">
+                            </div>
+                            <div class="item-calories px-2">
+                                <label for="upd-item-calories">Update Calories</label>
+                                <input type="text" class="w-25" id="upd-item-calories">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="{{drink.id}}" class="btn btn-success">Update</button>
+                            <button class="btn btn-outline-dark" data-bs-dismiss="modal" data-bs-target="#itemModal">Go back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
         </div>
     
@@ -91,7 +138,30 @@
                 <h5 class="card-title">{{dessert.name}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{dessert.calories}}</h6>
             </div>
-            <button id="{{dessert.id}}" class="btn btn-close del-dessert"></button>
+            <div class="wrap-choice-button d-flex flex-column">
+                <button id="{{dessert.id}}" class="btn btn-close del-dessert"></button>
+                <button class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#itemModal">✎</button>
+            </div>
+            <div class="modal fade" id="itemModal">
+                <div class="modal-dialog">
+                    <div class="modal-content p-2">
+                        <div class="upd-input d-flex flex-column">
+                            <div class="item-name m-2">
+                                <label for="upd-item-name">Update Name</label>
+                                <input type="text" id="upd-item-name">
+                            </div>
+                            <div class="item-calories px-2">
+                                <label for="upd-item-calories">Update Calories</label>
+                                <input type="text" class="w-25" id="upd-item-calories">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="{{dessert.id}}" class="btn btn-success">Update</button>
+                            <button class="btn btn-outline-dark" data-bs-dismiss="modal" data-bs-target="#itemModal">Go back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
     </div>
