@@ -47,7 +47,6 @@ router.get("/catalog", async (req, res) => {
         
 
 
-
         res.render('cx-restaurant-views', {
             isLoggedIn: req.session.isLoggedIn,
             currUserId: req.session.user_id,
@@ -172,13 +171,15 @@ router.get("/user/create", loginCheck, async (req, res) => {
                 needToAdd: true
             })
             return 
+        }else{
+            res.render("mealcreation", {
+                isLoggedIn: req.session.isLoggedIn,
+                currUserId: req.session.user_id,
+                mealItems: pureMealItemList
+            })
+
         }
 
-        res.render("mealcreation", {
-            isLoggedIn: req.session.isLoggedIn,
-            currUserId: req.session.user_id,
-            mealItems: pureMealItemList
-        })
     } catch(err){
         console.log(err);
         res.json(err)
@@ -232,6 +233,10 @@ router.get("/user/profile", loginCheck, async (req, res) => {
 
 router.get("/user/meal/create/:id", async (req, res) => {
     try{
+        console.log(req.body);
+        
+
+
         let mealToUpdate = await Meal.findByPk(req.params.id, {
             include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
         })
@@ -242,48 +247,83 @@ router.get("/user/meal/create/:id", async (req, res) => {
             include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
         })
         let pureMealItems = mealItems.get({plain: true});
-        console.log(pureMealItems);
+        // console.log(pureMealItems);
         let availableMainCourses = [];
         let availableSides = [];
         let availableDesserts = [];
         let availableDrinks = [];
 
-
-        pureMealItems.main_courses.map(item => {
-            pureMealData.main_courses.map(mealItem => {
-                if(item.name != mealItem.name){
-                    availableMainCourses.push(item)
-                }
+        if(pureMealData.main_courses[0]){
+            pureMealItems.main_courses.map(item => {
+                pureMealData.main_courses.map(mealItem => {
+                    if(item.name != mealItem.name){
+                        availableMainCourses.push(item)
+                    }
+                })
             })
-        })
+        }else{
+            pureMealItems.main_courses.forEach(item => {
+                availableMainCourses.push(item)
+            })
+        }
+
         
+        if(pureMealData.sides[0]){
+            pureMealItems.sides.map(item => {
+                pureMealData.sides.map(mealItem => {
+                    if(item.name != mealItem.name){
+                        availableSides.push(item)
+                    }
+                })
+            })
+        }else{
+            pureMealItems.sides.forEach(item => {
+                availableSides.push(item)
+            })
+        }
+
+        if(pureMealData.desserts[0]){
+            pureMealItems.desserts.map(item => {
+                pureMealData.desserts.map(mealItem => {
+                    
+                    if(item.name != mealItem.name){
+                        availableDesserts.push(item)
+                    }
+                })
+            })
+        }else{
+            pureMealItems.desserts.forEach(item => {
+                availableDesserts.push(item)
+            })
+        }
+
+
+        if(pureMealData.drinks[0]){
+            pureMealItems.drinks.map(item => {
+                pureMealData.drinks.map(mealItem => {
+                    if(item.name != mealItem.name){
+                        availableDrinks.push(item)
+                    }
+                })
+                
+            })
+        }else{
+            pureMealItems.drinks.forEach(item => {
+                availableDrinks.push(item)
+            })
+        }
         
-        pureMealItems.sides.map(item => {
-            pureMealData.sides.map(mealItem => {
-                if(item.name != mealItem.name){
-                    availableSides.push(item)
-                }
-            })
-        })
-
-        pureMealItems.desserts.map(item => {
-            pureMealData.desserts.map(mealItem => {
-                if(item.name != mealItem.name){
-                    availableDesserts.push(item)
-                }
-            })
-        })
-
-        pureMealItems.drinks.map(item => {
-            pureMealData.drinks.map(mealItem => {
-                if(item.name != mealItem.name){
-                    availableDrinks.push(item)
-                }
-            })
-        })
-
-        console.log(pureMealData);
+        // for(i = 0;i < pureMealItems.drinks.length;i++){
+        //     for(j = 0;j < pureMealData.drinks.length;j++){
+        //         if(pureMealItems[i].name !== pureMealData.drinks[j].name){
+        //             availableDrinks.push(pureMealItems[i]);
+        //         }
+        //     }
+        // }
         console.log(availableDrinks);
+
+        // console.log(pureMealData);
+        // console.log(availableDesserts);
 
         res.render("update-meal", {
             isLoggedIn: req.session.isLoggedIn,

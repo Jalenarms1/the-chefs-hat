@@ -10,7 +10,27 @@
             Add more food to your inventory 
         </a>
         <a href="/user/create" class="list-group-item list-group-item-action mb-1 cst-menu-bg">Create New Meal</a>
-        <a href="#" id="del-acct-btn" class="text-danger list-group-item list-group-item-action mb-1 cst-menu-bg">Delete Account</a>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#myModal" class="text-danger list-group-item list-group-item-action mb-1 cst-menu-bg">Delete Account</a>
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog center" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="text-danger">Warning!</h4>
+                    </div>
+                    <div class="body text-danger p-2">
+                        <p>
+                            You won't be able to recover your account once deleted
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="wrap-buttons">
+                            <button id="del-acct-btn" class="btn btn-danger">Delete</button>
+                            <button class="btn btn-outline-dark" data-bs-dismiss="modal" data-bs-target="#myModal">Go Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="cust-contain cst-menu-bg shadow-lg border border-dark border-5 p-4 mx-auto">

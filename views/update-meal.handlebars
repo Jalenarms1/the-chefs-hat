@@ -5,7 +5,7 @@
             <div class="text-light text-center py-2">
                 <label for="creationName" class="form-label">
                     <h2>Make your changes below</h2></label>
-                <input type="text" class="form-control w-25 mx-3" id="creation" aria-describedby="creation" value="{{itemsAlready.name}}">
+                <input type="text" class="form-control w-25 mx-3" id="new-meal-name" aria-describedby="creation" value="{{itemsAlready.name}}">
             </div>
         </header>
 
@@ -14,15 +14,14 @@
                 <div class="card-body">
                     <H3>Main dish</H3>
                     {{#each itemsAlready.main_courses as |mainCourse|}}
-                    <input type="checkbox" checked="true" class="form-check-input main">
+                    <input type="checkbox" checked="true" class="form-check-input upd-main" value="{{mainCourse.id}}">
                     <label class="form-check-label" for="drinks">{{mainCourse.name}}</label>
                     {{/each}}
                     {{#each availableMainItems as |mainCourse|}}
-                    <input type="checkbox" class="form-check-input main">
+                    <input type="checkbox" class="form-check-input upd-main" value="{{mainCourse.id}}">
                     <label class="form-check-label" for="drinks">{{mainCourse.name}}</label>
                     {{/each}}
-                    {{!-- <input type="checkbox" class="form-check-input main" id="mainCheck">
-                    <label class="form-check-label" for="Main dish">Example</label> --}}
+                    
                 </div>
             </div>
 
@@ -30,11 +29,11 @@
                 <div class="card-body">
                     <H3>Sides</H3>
                     {{#each itemsAlready.sides as |side|}}
-                    <input type="checkbox" checked="true" class="form-check-input side">
+                    <input type="checkbox" checked="true" class="form-check-input upd-side" value="{{side.id}}">
                     <label class="form-check-label" for="drinks">{{side.name}}</label>
                     {{/each}}
                     {{#each availableSideItems as |side|}}
-                    <input type="checkbox" class="form-check-input side">
+                    <input type="checkbox" class="form-check-input upd-side" value="{{side.id}}">
                     <label class="form-check-label" for="drinks">{{side.name}}</label>
                     {{/each}}
                 </div>
@@ -44,11 +43,11 @@
                 <div class="card-body">
                     <H3>Drinks</H3>
                     {{#each itemsAlready.drinks as |drink|}}
-                    <input type="checkbox" checked="true" class="form-check-input drink">
+                    <input type="checkbox" checked="true" class="form-check-input upd-drink" value="{{drink.id}}">
                     <label class="form-check-label" for="drinks">{{drink.name}}</label>
                     {{/each}}
                     {{#each availableDrinkItems as |drink|}}
-                    <input type="checkbox" class="form-check-input drink">
+                    <input type="checkbox" class="form-check-input upd-drink" value="{{drink.id}}">
                     <label class="form-check-label" for="drinks">{{drink.name}}</label>
                     {{/each}}
                 </div>
@@ -58,11 +57,11 @@
                 <div class="card-body">
                     <H3>Desserts</H3>
                     {{#each itemsAlready.desserts as |dessert|}}
-                    <input type="checkbox" checked="true" class="form-check-input dessert">
+                    <input type="checkbox" checked="true" class="form-check-input upd-dessert" value="{{dessert.id}}">
                     <label class="form-check-label" for="drinks">{{dessert.name}}</label>
                     {{/each}}
                     {{#each availableDessertItems as |dessert|}}
-                    <input type="checkbox" class="form-check-input dessert">
+                    <input type="checkbox" class="form-check-input upd-dessert" value="{{dessert.id}}">
                     <label class="form-check-label" for="drinks">{{dessert.name}}</label>
                     {{/each}}
                 </div>
@@ -72,13 +71,14 @@
         <div class="card scroll-bg w-50 m-3">
             <div class="card-body">
                 <h4>Update your image here</h4>
-                <input type="file" name="upload" id="file-pick">
+                <input type="file" name="upload" id="updated-img">
             </div>
         </div>
 
         <div class="w-50">
-            <button id="new-meal-btn" class="btn btn-outline-dark w-25 m-3">Update</button>
+            <button id="update-meal-btn" class="btn btn-outline-dark w-25 m-3">Update</button>
             <img class="hide" id="loading-img-update" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" alt="loading" style="width: 30%;">
+            <input type="hidden" id="meal-id" value="{{itemsAlready.id}}">
         </div>
     </form>
 </div>
