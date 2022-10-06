@@ -67,7 +67,7 @@ router.post("/signup", async (req, res) => {
 
             let newRestaurant = await Restaurant.create({
                 name: req.body.restName,
-                image: sizedPic.eager[0].url,
+                image: sizedPic.eager[0].secure_url,
                 ownerId: newOwner.id,
                 address: req.body.address,
                 phoneNumber: req.body.phoneNumber
@@ -338,7 +338,7 @@ router.post("/dessert/", async (req, res) => {
 
 router.put("/dessert/:id", async (req, res) => {
     try{
-        let newDessert = await Dessert.create(req.body, {
+        let newDessert = await Dessert.update(req.body, {
             where: {
                 id: req.params.id
             }
@@ -464,7 +464,7 @@ router.post("/meal", async (req, res) => {
         let constructMealTicket = [];
         let newMeal = await Meal.create({
             name: req.body.name,
-            image: sizedImg.eager[0].url,
+            image: sizedImg.eager[0].secure_url,
             restaurantId: currRestaurant.id
         });
 

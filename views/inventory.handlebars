@@ -1,0 +1,52 @@
+<div class="restName mb-2 px-4 py-2 bg-dark text-light w-25">
+    <h2>Inventory</h2>
+</div>
+
+<div class="wrap-inventory m-5 row">
+    <div class="heading-mainCourses my-2">
+        <h4>Main Courses</h4>
+    </div>
+    {{#each restaurant.main_courses as |mainCourse|}}
+    <div class="card m-1 col-4" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{mainCourse.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{mainCourse.calories}}</h6>
+        </div>
+    </div>
+    {{/each}}
+     <div class="heading-sides my-2">
+        <h4>Sides</h4>
+    </div>
+    {{#each restaurant.sides as |side|}}
+    <div class="card m-1 col-4" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{side.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{side.calories}}</h6>
+        </div>
+    </div>
+    {{/each}}
+     <div class="heading-drinks my-2">
+        <h4>Drinks</h4>
+    </div>
+    {{#each restaurant.drinks as |drink|}}
+    <div class="card m-1 col-4" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{drink.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{drink.calories}}</h6>
+        </div>
+    </div>
+    {{/each}}
+     <div class="heading-desserts my-2">
+        <h4>Desserts</h4>
+    </div>
+    {{#each restaurant.desserts as |dessert|}}
+    <div class="card m-1 col-4" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{dessert.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{dessert.calories}}</h6>
+        </div>
+    </div>
+    {{/each}}
+    
+
+</div>

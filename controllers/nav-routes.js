@@ -331,9 +331,34 @@ router.get("/user/meal/:id", loginCheck, async (req, res) => {
     }
 })
 
-//loads the reviews for the item the customer is choosing to display
-router.get("/user/profile/:id/reviews", loginCheck, (req, res) => {
+router.get("")
 
+//loads the reviews for the item the customer is choosing to display
+router.get("/user/inventory", loginCheck, async (req, res) => {
+    try{  
+        
+        let currRestaurant = await Restaurant.findOne({
+            where: {
+                ownerId: req.session.user_id
+            },
+            include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
+        })
+
+        let pureRestData = currRestaurant.get({plain: true})
+
+        console.log(pureRestData);
+        
+        res.render("inventory", {
+            isLoggedIn: req.session.isLoggedIn,
+            currUserId: req.session.user_id,
+            restaurant: pureRestData
+
+        })
+
+    }catch(err){
+        console.log(err);
+        res.json(err)
+    }
 })
 
 
