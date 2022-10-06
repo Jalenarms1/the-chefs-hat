@@ -6,7 +6,10 @@
                 <label for="creationName" class="form-label">
                     <h2>Your New Dish!</h2>
                 </label>
-                <input type="text" class="form-control w-25 mx-3" id="creationName" aria-describedby="creation" placeholder="Your New Dish Name Here">
+                <input type="text" class="form-control w-25 mx-3" id="creationName" aria-describedby="creation" placeholder="Your New Dish Name Here" required>
+                <div class="invalid-feedback">
+                    This field is required
+                </div>
             </div>
         </header>
 
@@ -55,7 +58,10 @@
         <div class="card scroll-bg w-50 m-3">
             <div class="card-body">
                 <h4>Upload Your Image Here!</h4>
-                <input type="file" name="upload" id="file-pick">
+                <input type="file" class="form-control" name="upload" id="file-pick" required>
+            </div>
+            <div class="invalid-feedback">
+                This field is required
             </div>
         </div>
 

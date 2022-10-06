@@ -111,6 +111,16 @@ async function newFormHandler(event) {
     let image = document.querySelector('#file-pick');
     let dessertArr = document.querySelectorAll(".desserts")
 
+    let fields = document.querySelectorAll(".form-control");
+
+    fields.forEach(item => {
+        if(!item.checkValidity()){
+            item.classList.add("is-invalid");
+            loadingImgCreate.classList.add("hide");
+            return 
+        }
+    })
+
     if(mainArr){
         mainArr.forEach(box => {
             if(box.checked){

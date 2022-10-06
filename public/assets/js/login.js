@@ -4,16 +4,32 @@ const loginBtn = document.querySelector("#submit-login");
 const inputImg = document.querySelector("#rest-pic");
 const loadingImgSignUp = document.querySelector("#loading-img-signup");
 const loadingImgLogin = document.querySelector("#loading-img-login");
+const fields = document.querySelectorAll(".form-control");
 
 const userLogin = async (event) => {
     event.preventDefault();
-
-    loadingImgLogin.classList.remove("hide");
-
     // Collect values from the login form 
     const email = document.querySelector('#emailLog').value.trim();
     const password = document.querySelector('#passLog').value.trim();
 
+    // if(!email.checkValidity()){
+    //     email.classList.add("is-invalid");
+    //     return
+    // }
+    // if(!password.checkValidity()){
+    //     password.classList.add("is-invalid");
+    //     return
+    // }
+    loadingImgLogin.classList.remove("hide");
+
+    fields.forEach(item => {
+        if(!item.checkValidity()){
+            item.classList.add("is-invalid");
+            loadingImgLogin.classList.add("hide")
+            return 
+        }
+    })
+    
     if (email && password) {
         // Send a Post request to the API endpoint
         console.log(password);
@@ -46,16 +62,15 @@ const newSignup = async (event) => {
     const phoneNumber = document.querySelector('#formPhone');
     const restName = document.querySelector('#formRest');
 
-    const allFields = document.querySelectorAll(".check");
-    console.log(allFields);
+    let fields = document.querySelectorAll(".form-control");
 
-    for(i = 0;i < allFields.length;i++){
-        if(!allFields[i].checkValidity()){
-            allFields[i].classList.add("is-invalid");
-            return
+    fields.forEach(item => {
+        if(!item.checkValidity()){
+            item.classList.add("is-invalid");
+            loadingImgSignUp.classList.add("hide");
+            return 
         }
-
-    }
+    })
     
     reader.addEventListener("load", async () => {
 
