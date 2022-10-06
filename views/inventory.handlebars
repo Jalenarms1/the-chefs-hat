@@ -16,7 +16,29 @@
                 <h5 class="card-title">{{mainCourse.name}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{mainCourse.calories}}</h6>
             </div>
-            <button id="{{mainCourse.id}}" class="btn btn-close del-mainCourse"></button>
+            <div class="wrap-choice-button d-flex flex-column">
+                <button id="{{mainCourse.id}}" class="btn btn-close del-mainCourse"></button>
+                <button class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#itemModal">✎</button>
+            </div>
+            <div class="modal fade" id="itemModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="upd-input d-flex flex-column">
+                            <div class="item-name m-2">
+                                <label for="upd-item-name">Update Name</label>
+                                <input type="text" id="upd-item-name">
+                            </div>
+                            <div class="item-calories">
+                                <label for="upd-item-calories">Update Calories</label>
+                                <input type="text" class="w-25" id="upd-item-calories">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-success">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {{/each}}
@@ -51,6 +73,7 @@
                 <h6 class="card-subtitle mb-2 text-muted">{{drink.calories}}</h6>
             </div>
             <button id="{{drink.id}}" class="btn btn-close del-drink"></button>
+            
         </div>
     
     </div>

@@ -246,6 +246,10 @@ const postReview = async () => {
         mealUp.classList.remove("hide");
         hideSec.classList.add("hide");
 
+        if(response.ok){
+            location.reload();
+        }
+
 
     }catch(err){
         console.log(err);
