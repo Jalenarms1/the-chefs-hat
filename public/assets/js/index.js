@@ -3,6 +3,7 @@ let rating = document.querySelector("#rating-select");
 let mealId = document.querySelector("#meal-id");
 let hiddenId = document.querySelector("#hidden")
 let loadingImgCreate = document.querySelector("#loading-img-create");
+let loadingImgUpdate = document.querySelector("#loading-img-update");
 
 // Place script code here
 async function newFormHandler(event) {
@@ -161,18 +162,118 @@ if(deleteBtn){
     deleteBtn.addEventListener('click', delMeal );
 }
 
+let updateMealBtn = document.querySelector("#update-meal-btn");
+
 const updateMeal = async (event) => {
     try{
-        console.log(event);
-        let response = await fetch(`/api/user/meal/${event.target.id}`, {
-            method: 'PUT',
-            body: {}
+        event.preventDefault();
+        loadingImgUpdate.classList.remove("hide");
+        let mealId = document.querySelector("#meal-id")
+    
+        let mealName = document.querySelector("#new-meal-name");
+    
+        let emptyArrayToStoreMainValues = [];
+        let emptyArrayToStoresidesValues = [];
+        let emptyArrayToStoredrinksValues = [];
+        let emptyArrayToStoreDessertValues = [];
+    
+        let mainArr = document.querySelectorAll('.upd-main');
+        let sidesArr = document.querySelectorAll('.upd-side');
+        let drinksArr = document.querySelectorAll('.upd-drink');
+        let image = document.querySelector('#updated-img');
+        let dessertArr = document.querySelectorAll(".upd-dessert")
+    
+        if(mainArr){
+            mainArr.forEach(box => {
+                if(box.checked){
+                    emptyArrayToStoreMainValues.push(box.value)
+                }
+            });
+    
+        }
+        
+        if(sidesArr){
+            sidesArr.forEach(box => {
+                if(box.checked){
+                    emptyArrayToStoresidesValues.push(box.value)
+                }
+            });
 
-        })
-        if(response.ok){
-            location.replace("/user/profile")
-    }
-    } catch (err){
+        }
+    
+        drinksArr.forEach(box => {
+            if(box.checked){
+                emptyArrayToStoredrinksValues.push(box.value)
+            }
+        });
+    
+        dessertArr.forEach(box => {
+            if(box.checked){
+                emptyArrayToStoreDessertValues.push(box.value)
+            }
+        });
+        console.log(emptyArrayToStoreMainValues)
+        console.log(emptyArrayToStoresidesValues)
+        console.log(emptyArrayToStoredrinksValues)
+        console.log(emptyArrayToStoreDessertValues)
+    
+        if(image.files[0]){
+            let imageFile = image.files[0];
+            let reader = new FileReader();
+            reader.addEventListener('load', async () => {
+                let response = await fetch(`/api/user/meal/${mealId.value}`, {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: mealName.value,
+                        image: reader.result.toString(),
+                        mainCourseIds: emptyArrayToStoreMainValues,
+                        sideIds: emptyArrayToStoresidesValues,
+                        drinkIds: emptyArrayToStoredrinksValues,
+                        dessertIds: emptyArrayToStoreDessertValues
+                    })
+                    
+                   
+                })
+                if (response.ok) {
+                    document.location.replace('/user/profile');
+                } else {
+                    alert('Failed to load');
+                }
+        
+            });
+            reader.readAsDataURL(imageFile);
+        }else{
+            let response = await fetch(`/api/user/meal/${mealId.value}`, {
+                method: 'PUT',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: mealName.value,
+                    mainCourseIds: emptyArrayToStoreMainValues,
+                    sideIds: emptyArrayToStoresidesValues,
+                    drinkIds: emptyArrayToStoredrinksValues,
+                    dessertIds: emptyArrayToStoreDessertValues
+                })
+            })
+
+            if (response.ok) {
+                document.location.replace('/user/profile');
+            } else {
+                alert('Failed to load');
+            }
+        }
+    
+        
+    }catch(err){
         console.log(err);
     }
+    
+}
+
+if(updateMealBtn){
+    updateMealBtn.addEventListener("click", updateMeal);
 }

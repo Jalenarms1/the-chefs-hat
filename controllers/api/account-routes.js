@@ -520,11 +520,34 @@ router.post("/meal", async (req, res) => {
 // route to update meal --tested successfully
 router.put("/meal/:id", async (req, res) => {
     try{
-        let mealToUpdate = await Meal.update(req.body, {
-            where: {
-                id: req.params.id
-            }
-        })
+        console.log(req.body);
+        if(req.body.image){
+            let { image } = req.body;
+            let imgData = await cloudinary.uploader.upload(image, options);
+
+            let sizedImg = await cloudinary.uploader.explicit(imgData.public_id, {
+                type: 'upload',
+                    eager: [{width: 450, height: 300}]
+            })
+
+            let mealToUpdate = await Meal.update(
+                {
+                    name: req.body.name,
+                    image: sizedImg.eager[0].secure_url
+                }, {
+                where: {
+                    id: req.params.id
+                }
+            })
+        }else{
+            let mealToUpdate = await Meal.update(req.body, {
+                where: {
+                    id: req.params.id
+                }
+            })
+
+        }
+
         
         let newMealTickets = [];
         let mealTicketsToUpdate = await MealTicket.findAll({
@@ -533,69 +556,81 @@ router.put("/meal/:id", async (req, res) => {
             }
         })
 
-        let mainCourseIds = mealTicketsToUpdate.map(({ mainCourseId }) => mainCourseId);
-        let newMainCourseIds = req.body.mainCourseIds.filter(item => !mainCourseIds.includes(item)).map(newItem => {
-            return newMealTickets.push({
-                mealId: req.params.id,
-                mainCourseId: newItem
+        if(req.body.mainCourseIds){
+            let mainCourseIds = mealTicketsToUpdate.map(({ mainCourseId }) => mainCourseId);
+            let newMainCourseIds = req.body.mainCourseIds.filter(item => !mainCourseIds.includes(item)).map(newItem => {
+                return newMealTickets.push({
+                    mealId: req.params.id,
+                    mainCourseId: newItem
+                })
             })
-        })
-        let mainCourseIdsToRemove = mainCourseIds.filter(item => {
-            return !req.body.mainCourseIds.includes(item)
-        })
-        let removingMainIds = await MealTicket.destroy({
-            where: {
-                mainCourseId: mainCourseIdsToRemove
-            }
-        })
-        //
-        let sideIds = mealTicketsToUpdate.map(({ sideId }) => sideId);
-        let newSideIds = req.body.sideIds.filter(item => !sideIds.includes(item)).map(newItem => {
-            return newMealTickets.push({
-                mealId: req.params.id,
-                sideId: newItem
-            });
-        })
-        let sideIdsToRemove = sideIds.filter(item => {
-            return !req.body.sideIds.includes(item)
-        })
-        let removingSideIds = await MealTicket.destroy({
-            where: {
-                sideId: sideIdsToRemove
-            }
-        })
-        //
-        let dessertIds = mealTicketsToUpdate.map(({ dessertId }) => dessertId);
-        let newDessertIds = req.body.dessertIds.filter(item => !dessertIds.includes(item)).map(newItem => {
-            return newMealTickets.push({
-                mealId: req.params.id,
-                dessertId: newItem
+            let mainCourseIdsToRemove = mainCourseIds.filter(item => {
+                return !req.body.mainCourseIds.includes(item)
             })
-        })
-        let dessertIdsToRemove = dessertIds.filter(item => {
-            return !req.body.dessertIds.includes(item)
-        })
-        let removingDessertIds = await MealTicket.destroy({
-            where: {
-                dessertId: dessertIdsToRemove
-            }
-        })
-        //
-        let drinkIds = mealTicketsToUpdate.map(({ drinkId }) => drinkId);
-        let newDrinkIds = req.body.drinkIds.filter(item => !drinkIds.includes(item)).map(newItem => {
-            return newMealTickets.push({
-                mealId: req.params.id,
-                drinkId: newItem
+            let removingMainIds = await MealTicket.destroy({
+                where: {
+                    mainCourseId: mainCourseIdsToRemove
+                }
             })
-        })
-        let drinkIdsToRemove = drinkIds.filter(item => {
-            return !req.body.drinkIds.includes(item)
-        })
-        let removingDrinkIds = await MealTicket.destroy({
-            where: {
-                drinkId: drinkIdsToRemove
-            }
-        })
+            
+        }
+        //
+        if(req.body.sideIds){
+            let sideIds = mealTicketsToUpdate.map(({ sideId }) => sideId);
+            let newSideIds = req.body.sideIds.filter(item => !sideIds.includes(item)).map(newItem => {
+                return newMealTickets.push({
+                    mealId: req.params.id,
+                    sideId: newItem
+                });
+            })
+            //
+            let sideIdsToRemove = sideIds.filter(item => {
+                return !req.body.sideIds.includes(item)
+            })
+            let removingSideIds = await MealTicket.destroy({
+                where: {
+                    sideId: sideIdsToRemove
+                }
+            })
+        }
+        
+
+        if(req.body.dessertIds){
+            let dessertIds = mealTicketsToUpdate.map(({ dessertId }) => dessertId);
+            let newDessertIds = req.body.dessertIds.filter(item => !dessertIds.includes(item)).map(newItem => {
+                return newMealTickets.push({
+                    mealId: req.params.id,
+                    dessertId: newItem
+                })
+            })
+            let dessertIdsToRemove = dessertIds.filter(item => {
+                return !req.body.dessertIds.includes(item)
+            })
+            let removingDessertIds = await MealTicket.destroy({
+                where: {
+                    dessertId: dessertIdsToRemove
+                }
+            })
+            
+        }
+        //
+        if(req.body.drinkIds){
+            let drinkIds = mealTicketsToUpdate.map(({ drinkId }) => drinkId);
+            let newDrinkIds = req.body.drinkIds.filter(item => !drinkIds.includes(item)).map(newItem => {
+                return newMealTickets.push({
+                    mealId: req.params.id,
+                    drinkId: newItem
+                })
+            })
+            let drinkIdsToRemove = drinkIds.filter(item => {
+                return !req.body.drinkIds.includes(item)
+            })
+            let removingDrinkIds = await MealTicket.destroy({
+                where: {
+                    drinkId: drinkIdsToRemove
+                }
+            })
+        }
 
         let updatedMealTickets = await MealTicket.bulkCreate(newMealTickets);
 
