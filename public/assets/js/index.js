@@ -13,10 +13,10 @@ async function newFormHandler(event) {
 
     for(i = 0;i < fields.length;i++){
         if(!fields[i].checkValidity()){
-            item.classList.add("is-invalid");
+            fields[i].classList.add("is-invalid");
             loadingImgCreate.classList.add("hide");
-            
-        } return 
+            return 
+        } 
     }
 
     let mealName = document.querySelector("#creationName");
@@ -276,7 +276,7 @@ const updateMeal = async (event) => {
             })
 
             if (response.ok) {
-                document.location.replace('/user/profile');
+                document.location.replace(`/user/meal/${mealId.value}`);
             } else {
                 alert('Failed to load');
             }

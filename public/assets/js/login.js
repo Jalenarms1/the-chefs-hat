@@ -4,7 +4,11 @@ const loginBtn = document.querySelector("#submit-login");
 const inputImg = document.querySelector("#rest-pic");
 const loadingImgSignUp = document.querySelector("#loading-img-signup");
 const loadingImgLogin = document.querySelector("#loading-img-login");
-const fields = document.querySelectorAll(".form-control");
+const signupFields = document.querySelectorAll(".form-control-signup");
+const wrongAlert = document.querySelector("#wrong-credentials");
+let loginFields = document.querySelectorAll(".form-control-login");
+let checkDouble = document.querySelector("#similar-check");
+
 
 const userLogin = async (event) => {
     event.preventDefault();
@@ -22,7 +26,7 @@ const userLogin = async (event) => {
     // }
     loadingImgLogin.classList.remove("hide");
 
-    fields.forEach(item => {
+    loginFields.forEach(item => {
         if(!item.checkValidity()){
             item.classList.add("is-invalid");
             loadingImgLogin.classList.add("hide")
@@ -40,8 +44,9 @@ const userLogin = async (event) => {
         });
         if (response.ok) {
             document.location.replace('/user/profile');
-        } else {
-            alert(response.statusText);
+        } else if(response.status === 404 || response.status === 400){
+            wrongAlert.classList.remove("hide");
+            loadingImgLogin.classList.add("hide")
         }
     }
 };
@@ -64,9 +69,8 @@ const newSignup = async (event) => {
         return
     }
     
-    let fields = document.querySelectorAll(".form-control");
     
-    fields.forEach(item => {
+    signupFields.forEach(item => {
         if(!item.checkValidity()){
             item.classList.add("is-invalid");
             loadingImgSignUp.classList.add("hide");
@@ -92,9 +96,10 @@ const newSignup = async (event) => {
                 });
         
                 if (response.ok) {
-                    document.location.replace('/user/add');
-                } else {
-                    alert(response.statusText);
+                    // document.location.replace('/user/add');
+                } else if(response.status === 500) {
+                    checkDouble.classList.remove("hide");
+                    loadingImgSignUp.classList.add("hide");
                 }
             } else{
                 alert("All fields required")
