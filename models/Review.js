@@ -13,7 +13,7 @@ const mailTransporter = nodemailer.createTransport({
 
 
 class Review extends Model {
-    sendBadReview = async (ownerId, review) => {
+    sendBadReview = async (ownerId, review, mealId) => {
         let ownerOfReviewed =  await Owner.findOne({
             where: {
                 id: ownerId
@@ -24,7 +24,7 @@ class Review extends Model {
         let details = {
             from: 'dev.test.jalen@gmail.com',
             to: ownerOfReviewed.email,
-            subject: 'Urgent! Bad review!',
+            subject: `Meal id: ${mealId} received a bad review!`,
             text: review
         }
     

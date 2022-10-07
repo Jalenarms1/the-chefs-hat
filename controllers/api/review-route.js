@@ -11,7 +11,7 @@ router.post("/new/:id", async (req, res) => {
         })
         
         if(req.body.rating < 3){
-            newReview.sendBadReview(req.body.ownerId, req.body.content);
+            newReview.sendBadReview(req.body.ownerId, req.body.content, req.params.id);
         }
 
 

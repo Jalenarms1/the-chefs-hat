@@ -11,7 +11,7 @@ body{
     /* background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%); */
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     
-    
+    height: fit-content;
 
 }
 
@@ -92,8 +92,16 @@ h1, h2, h3, th, td{
     display: flex;
     height: 1000px;
 }
+.expand-sm{
+    width: 25%;
+}
 
 .scroll-this{
+    border: 1px solid black;
+    height: 280px;
+    overflow: auto;
+}
+.scroll-this-cx{
     border: 1px solid black;
     height: 280px;
     overflow: auto;
@@ -106,4 +114,63 @@ td,th{
 }
 .hide{
     display: none;
+}
+.cst-card{
+    width: 25%;
+    height: 50%;
+}
+
+
+@media screen and (max-width: 992px) {
+    .parent-one{
+        flex-direction: column;
+    }
+    .scroll-this{
+        margin:  0 auto;
+        width: 60%;
+        
+    }
+    .one-expand-sm{
+        margin: 0 auto;
+        width: 60%;
+    }
+    .wrap-choices{
+        flex-direction: column;
+    }
+    .cst-card{
+        width: 30%;
+        margin: 2%;
+
+    }
+}
+
+@media screen and (max-width: 865px){
+    .parent{
+        flex-direction: column;
+    }
+    .parent-one{
+        flex-direction: column;
+    }
+    .expand-sm{
+        margin: 0 auto;
+        width: 60%;
+
+    }
+    .cust-contain{
+        flex: 0;
+    }
+    .scroll-this-cx{
+        width: 90%;
+    }
+
+}
+@media screen and (max-width: 555px) {
+    .center-sm{
+        margin-left: 30%;
+        padding-bottom: 5%;
+    }
+
+    .cst-card{
+        width: 40%;
+    }
 }

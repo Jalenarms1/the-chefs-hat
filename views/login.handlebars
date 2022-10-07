@@ -1,17 +1,20 @@
 <div class="wrap-login m-auto w-50 mt-5 bg-white p-4">
+  <div class="alert alert-danger hide" id="wrong-credentials" role="alert">
+  Failed to recognize the attempted credentials
+  </div>
   <form class="bg-white">
     <div class="mb-3">
       <label for="emailLog" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="emailLog" aria-describedby="emailHelp" required>
+      <input type="email" class="form-control form-control-login" id="emailLog" aria-describedby="emailHelp" required>
       <div class="invalid-feedback">
-        This field is required.
+        Invalid input.
       </div>
     </div>
     <div class="mb-3">
       <label for="passLog" class="form-label">Password</label>
-      <input type="password" class="form-control" id="passLog" required>
+      <input type="password" class="form-control form-control-login" id="passLog" required>
       <div class="invalid-feedback">
-        This field is required.
+        Invalid input.
       </div>
     </div>
     <button id="submit-login" class="btn btn-outline-dark">Submit</button>

@@ -28,12 +28,6 @@ const options = {
 
 // api/user
 
-router.post("/signup/image", async (req, res) => {
-    
-
-    res.json(newCloudPic);
-})
-
 //initial post on creating a new account
 //format {
 //    owner: (string),
@@ -55,7 +49,6 @@ router.post("/signup", async (req, res) => {
                 eager: [{width: 450, height: 300}]
         })
 
-        console.log(sizedPic);
 
         if(image && owner && email && password && restName && address && phoneNumber){
 
@@ -91,14 +84,13 @@ router.post("/signup", async (req, res) => {
 
     } catch(err){
         console.log(err);
-        res.json(err)
+        res.status(500).json(err)
     }
 })
 
 //post to authenticate login
 router.post("/login", async (req, res) => {
     try{
-        console.log(req.body.password);
         let reqUserSignIn = await Owner.findOne({
             where: {
                 email: req.body.email
@@ -212,7 +204,6 @@ router.put("/main-course/:id", async (req, res) => {
             }
         })
 
-        console.log(newMainCourse);
         res.json(newMainCourse)
     } catch(err){
         console.log(err);
@@ -229,7 +220,6 @@ router.delete("/main-course/:id", async (req, res) => {
         })
 
         res.json(removedItem);
-        console.log(removedItem);
     } catch(err){
         res.json(err);
         console.log(err);
@@ -277,7 +267,6 @@ router.put("/side-dish/:id", async (req, res) => {
         })
 
         res.json(newSideInfo);
-        console.log(newSideInfo);
     } catch(err){
         console.log(err);
         res.json(err)
@@ -303,7 +292,6 @@ router.delete("/side-dish/:id", async (req, res) => {
         })
 
         res.json(remSideInfo);
-        console.log(remSideInfo);
     } catch(err){
         console.log(err);
         res.json(err)
@@ -448,7 +436,6 @@ router.delete("/drink/:id", async (req, res) => {
 //
 router.post("/meal", async (req, res) => {
     try{
-        console.log(req.body);
         let {image} = req.body;
 
         let imgData = await cloudinary.uploader.upload(image, options);
@@ -509,9 +496,7 @@ router.post("/meal", async (req, res) => {
             })
         }
 
-        console.log(constructMealTicket);
         let newMainMealTicket = await MealTicket.bulkCreate(constructMealTicket)
-        console.log(newMainMealTicket);
         res.json(newMainMealTicket);
 
     } catch(err){
@@ -523,7 +508,6 @@ router.post("/meal", async (req, res) => {
 // route to update meal --tested successfully
 router.put("/meal/:id", async (req, res) => {
     try{
-        console.log(req.body);
         if(req.body.image){
             let { image } = req.body;
             let imgData = await cloudinary.uploader.upload(image, options);

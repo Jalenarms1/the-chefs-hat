@@ -64,9 +64,7 @@ router.get("/catalog", async (req, res) => {
 router.get("/catalog/:id", async (req, res) => {
     try{
         let currRestaurant = await Restaurant.findByPk(req.params.id);
-        console.log(currRestaurant);
         let restaurant = currRestaurant.get({plain: true})
-        console.log(restaurant);
 
         let mealsData = await Meal.findAll({
             where: {
@@ -81,7 +79,6 @@ router.get("/catalog/:id", async (req, res) => {
             return item.get({plain:true})
         })
         
-        console.log(allMeals)
 
         if(allMeals){
             res.render("cx-restaurant-meals", {
@@ -108,7 +105,6 @@ router.get("/catalog/meal/:mealId/", async (req, res) => {
 
         let pureMealInfo = getMeal.get({plain: true});
 
-        console.log(pureMealInfo);
         let totalCal = getMeal.getTotalCalories(pureMealInfo)
 
         let currRestaurant = await Restaurant.findByPk(pureMealInfo.restaurantId, {
@@ -118,7 +114,6 @@ router.get("/catalog/meal/:mealId/", async (req, res) => {
         let restaurant = currRestaurant.get({
             plain: true
         })
-        console.log(restaurant);
 
         res.render("cx-one-meal", {
             meal: pureMealInfo,
@@ -158,11 +153,9 @@ router.get("/user/create", loginCheck, async (req, res) => {
             },
             include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
         })
-        console.log(mealItems);
         
 
         let pureMealItemList = mealItems.get({plain: true});
-        console.log(pureMealItemList);
 
         if(pureMealItemList.main_courses[0] == null && pureMealItemList.sides[0] == null && pureMealItemList.drinks[0] == null && pureMealItemList.desserts[0] == null){
             res.render("addnewfoods", {
@@ -210,10 +203,8 @@ router.get("/user/profile", loginCheck, async (req, res) => {
             return item.get({plain:true})
         })
         
-        console.log(allMeals);
 
     
-        console.log("Gage timing");
 
         if(pureOwnerData && allMeals){
             res.render("user-profile", {
@@ -233,7 +224,6 @@ router.get("/user/profile", loginCheck, async (req, res) => {
 
 router.get("/user/meal/create/:id", async (req, res) => {
     try{
-        console.log(req.body);
         
 
 
@@ -320,7 +310,6 @@ router.get("/user/meal/create/:id", async (req, res) => {
         //         }
         //     }
         // }
-        console.log(availableDrinks);
 
         // console.log(pureMealData);
         // console.log(availableDesserts);
@@ -352,7 +341,6 @@ router.get("/user/meal/:id", loginCheck, async (req, res) => {
 
         let pureMealInfo = getMeal.get({plain: true});
 
-        console.log(pureMealInfo);
         let totalCal = getMeal.getTotalCalories(pureMealInfo)
 
 
@@ -386,7 +374,6 @@ router.get("/user/inventory", loginCheck, async (req, res) => {
 
         let pureRestData = currRestaurant.get({plain: true})
 
-        console.log(pureRestData);
         
         res.render("inventory", {
             isLoggedIn: req.session.isLoggedIn,
