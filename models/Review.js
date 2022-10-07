@@ -24,7 +24,7 @@ class Review extends Model {
         let details = {
             from: 'dev.test.jalen@gmail.com',
             to: ownerOfReviewed.email,
-            subject: `Item id: ${mealId} received a bad review!`,
+            subject: `Meal id: ${mealId} received a bad review!`,
             text: review
         }
     
