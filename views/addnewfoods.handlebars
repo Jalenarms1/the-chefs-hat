@@ -8,11 +8,17 @@ You currently don't have any food items to ceate a meal! Add to your inventory b
         <div class="row my-3 row-cols-1 row-cols-md-2 g-4">
             <div class="card m-2" style="width: 17rem;">
                 <div class="card-body">
-                        <label for="meal">Main Course</label>
-                        <input class="form-input" type="text" id="meal" name="meal" />
-                        <label for="mealCal">Calories</label>
-                        <br>
-                        <input class="form-input w-25" type="text" id="mealcal" name="mealCal" />
+                    <label for="meal">Main Course</label>
+                    <input class="form-input input-main" type="text" id="meal" name="meal" required />
+                    <div class="invalid-feedback">
+                        This field is required.
+                    </div>
+                    <label for="mealCal">Calories</label>
+                    <br>
+                    <input class="form-input input-main w-25" type="text" id="mealcal" name="mealCal" required />
+                    <div class="invalid-feedback">
+                        This field is required.
+                    </div>
                 </div>
                 <div class="mx-3 d-flex mb-1">
                     <button id="mealBtn" class="btn btn-success">+</button>
@@ -25,10 +31,16 @@ You currently don't have any food items to ceate a meal! Add to your inventory b
             <div class="card m-2" style="width: 17rem;">
                 <div class="card-body">
                     <label for="sides">Sides:</label>
-                    <input class="form-input" type="text" id="sides" name="sides" />
+                    <input class="form-input input-side" type="text" id="sides" name="sides" required />
+                    <div class="invalid-feedback">
+                        This field is required.
+                    </div>
                     <label for="sideCal">Calories</label>
                     <br>
-                    <input class="form-input w-25" type="text" id="sidecal" name="sideCal" />
+                    <input class="form-input input-side w-25" type="text" id="sidecal" name="sideCal" required />
+                    <div class="invalid-feedback">
+                        This field is required.
+                    </div>
                 </div>
                 <div class="mx-3 d-flex mb-1">
                     <button id="sideBtn" type="submit" class="btn btn-success">+</button>
@@ -43,10 +55,16 @@ You currently don't have any food items to ceate a meal! Add to your inventory b
             <div class="card m-2" style="width: 17rem;">
                 <div class="card-body">
                     <label for="drinks">Drinks:</label>
-                    <input class="form-input" type="text" id="drinks" name="drinks" />
+                    <input class="form-input input-drink" type="text" id="drinks" name="drinks" required />
+                    <div class="invalid-feedback">
+                        This field is required.
+                    </div>
                     <label for="drinksCal">Calories:</label>
                     <br>
-                    <input class="form-input w-25" type="text" id="drinksCal" name="drinksCal" />
+                    <input class="form-input input-drink w-25" type="text" id="drinksCal" name="drinksCal" required />
+                    <div class="invalid-feedback">
+                        This field is required.
+                    </div>
                 </div>
                 <div class="mx-3 d-flex mb-1">
                     <button id="drinksBtn" class="btn btn-success">+</button>
@@ -59,10 +77,16 @@ You currently don't have any food items to ceate a meal! Add to your inventory b
             <div class="card m-2" style="width: 17rem;">
                 <div class="card-body">
                     <label for="desert">Dessert:</label>
-                    <input class="form-input" type="text" id="desert" name="desert" />
+                    <input class="form-input input-dessert" type="text" id="desert" name="desert" required />
+                    <div class="invalid-feedback">
+                        This field is required.
+                    </div>
                     <label for="deertCal">Calories:</label>
                     <br>
-                    <input class="form-input w-25" type="text" id="desertCal" name="desertCal" />
+                    <input class="form-input input-dessert w-25" type="text" id="desertCal" name="desertCal" required />
+                    <div class="invalid-feedback">
+                        This field is required.
+                    </div>
                 </div>
                 <div class="mx-3 d-flex mb-1">
                     <button id="desertBtn" type="submit" class="btn btn-success">+</button>

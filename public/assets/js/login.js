@@ -16,14 +16,6 @@ const userLogin = async (event) => {
     const email = document.querySelector('#emailLog').value.trim();
     const password = document.querySelector('#passLog').value.trim();
 
-    // if(!email.checkValidity()){
-    //     email.classList.add("is-invalid");
-    //     return
-    // }
-    // if(!password.checkValidity()){
-    //     password.classList.add("is-invalid");
-    //     return
-    // }
     loadingImgLogin.classList.remove("hide");
 
     loginFields.forEach(item => {

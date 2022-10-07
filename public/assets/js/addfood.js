@@ -8,10 +8,22 @@ let loadingImgMain = document.querySelector("#loading-img-mainAdd");
 let loadingImgSide = document.querySelector("#loading-img-sideAdd");
 let loadingImgDrink = document.querySelector("#loading-img-drinkAdd");
 let loadingImgDessert = document.querySelector("#loading-img-dessertAdd");
+let mainInput = document.querySelectorAll(".input-main");
+let sideInput = document.querySelectorAll(".input-side");
+let drinkInput = document.querySelectorAll(".input-drink");
+let dessertInput = document.querySelectorAll(".input-dessert");
+
 
 
 async function newFood(event) {
   event.preventDefault();
+  mainInput.forEach(item => {
+    if(!item.checkValidity()){
+      item.classList.add("is-invalid");
+      loadingImgMain.classList.add("hide")
+      return 
+    }
+  })
 
   loadingImgMain.classList.remove("hide");
  
@@ -41,7 +53,13 @@ if(mainCourseBtn){
 async function newFoodSides(event) {
   event.preventDefault();
   loadingImgSide.classList.remove("hide");
-
+  sideInput.forEach(item => {
+    if(!item.checkValidity()){
+      item.classList.add("is-invalid");
+      loadingImgSide.classList.add("hide")
+      return 
+    }
+  })
   
   const side_dish_name = document.querySelector('#sides');
   const side_calorie = document.querySelector('#sidecal');
@@ -71,7 +89,13 @@ if(sideBtn){
 async function drinksName(event) {
   event.preventDefault();
   loadingImgDrink.classList.remove("hide");
-
+  drinkInput.forEach(item => {
+    if(!item.checkValidity()){
+      item.classList.add("is-invalid");
+      loadingImgDrink.classList.add("hide")
+      return 
+    }
+  })
   
   const drinks_name = document.querySelector('#drinks');
   const drinks_calorie = document.querySelector('#drinksCal');
@@ -102,7 +126,13 @@ if(drinksBtn){
 async function dessertsName(event) {
   event.preventDefault();
   loadingImgDessert.classList.remove("hide");
-
+  dessertInput.forEach(item => {
+    if(!item.checkValidity()){
+      item.classList.add("is-invalid");
+      loadingImgDessert.classList.add("hide")
+      return 
+    }
+  })
   
   const desserts_name = document.querySelector('#desert');
   const desserts_calories = document.querySelector('#desertCal');
