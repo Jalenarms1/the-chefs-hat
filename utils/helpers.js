@@ -30,16 +30,13 @@ module.exports = {
                     include: [{model: MainCourse}, {model: Side}, {model: Dessert}, {model: Drink}]
                 })
         
-                // console.log(mealsData);
         
                 let allMeals = mealsData.map(item => {
                     return item.get({plain:true})
                 })
                 
-                console.log(allMeals);
         
             
-                console.log("Gage timing");
         
                 if(pureOwnerData && allMeals){
                     res.render("user-profile", {
@@ -56,10 +53,6 @@ module.exports = {
                 res.json(err);
             }
 
-            res.render("user-profile", {
-                isLoggedIn: req.session.isLoggedIn,
-                currUserId: req.session.user_id
-            })
         }else{
             next();
         }
