@@ -65,7 +65,7 @@ const newSignup = async (event) => {
     if(password.value.length < 8 ){
         password.style.border = "1px solid red";
         document.querySelector("#password-length-check").classList.remove("hide")
-        loadingImgLogin.classList.add("hide");
+        loadingImgSignUp.classList.add("hide");
         return
     }
     
@@ -96,7 +96,7 @@ const newSignup = async (event) => {
                 });
         
                 if (response.ok) {
-                    // document.location.replace('/user/add');
+                    document.location.replace('/user/add');
                 } else if(response.status === 500) {
                     checkDouble.classList.remove("hide");
                     loadingImgSignUp.classList.add("hide");
