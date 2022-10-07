@@ -101,6 +101,11 @@ h1, h2, h3, th, td{
     height: 280px;
     overflow: auto;
 }
+.scroll-this-cx{
+    border: 1px solid black;
+    height: 280px;
+    overflow: auto;
+}
 
 td,th{
     border: 1px solid black;
@@ -140,6 +145,9 @@ td,th{
     }
     .cust-contain{
         flex: 0;
+    }
+    .scroll-this-cx{
+        width: 90%;
     }
 
 }
